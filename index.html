@@ -3,1556 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 検索結果に表示されるタイトル -->
+  
+  <!-- SEO関連メタタグ -->
   <title>無料の多機能ツリーメモ帳｜ブラウザで動くローカル同期対応Webアプリ</title>
-
-  <!-- 検索結果のタイトルの下に表示される説明文 -->
-  <meta name="description" content="ブラウザ上で動作する無料の多機能ツリー構造メモアプリ。フォルダ管理、タグ・タブ表示、全メモ横断検索、ドラッグ＆ドロップ操作、ローカルフォルダへの一括自動保存に対応。登録不要ですぐに使えます。">
-
-  <!-- 検索キーワードの設定 -->
-  <meta name="keywords" content="ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ">
-
-  <!-- SNSでシェアされた時の表示設定（OGPタグ） -->
-  <meta property="og:title" content="無料の多機能ツリーメモ帳">
-  <meta property="og:description" content="ブラウザで動作する高機能ツリー構造メモアプリ。登録不要・ローカル同期対応。">
+  <meta name="description" content="登録不要・完全無料で使えるブラウザ完結型の多機能ツリー構造メモアプリ。フォルダ階層管理、タブ表示、全メモリアルタイム検索、ローカルフォルダへの一括保存（FileSystem Access API）に対応。アウトライナーや思考整理に最適です。">
+  <meta name="keywords" content="ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ,フォルダ管理,思考整理ツール">
+  
+  <!-- OGP（SNS・検索共有用） -->
+  <meta property="og:title" content="無料の多機能ツリーメモ帳｜ブラウザで動くローカル同期対応Webアプリ">
+  <meta property="og:description" content="登録不要ですぐに使える高機能ツリー構造メモ。ローカルフォルダ一括同期＆全メモ検索対応。">
   <meta property="og:type" content="website">
 
   <style>
+    :root {
+      --primary-color: #007bff;
+      --primary-hover: #0056b3;
+      --bg-color: #f8f9fa;
+      --text-color: #333333;
+      --border-color: #e0e0e0;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-      background: #f8f9fa;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #ffffff;
     }
 
-    #sidebar {
-      width: 320px;
+    /* ヘッダー */
+    header {
       background: #ffffff;
-      border-right: 1px solid #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-
-    .sidebar-header {
-      padding: 12px;
-      border-bottom: 1px solid #e0e0e0;
-      background: #f1f3f5;
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
     }
-
-    .btn {
-      padding: 6px 10px;
-      font-size: 12px;
+    .logo {
+      font-size: 20px;
       font-weight: bold;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
-      cursor: pointer;
-      display: inline-flex;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    /* ヒーローセクション */
+    .hero {
+      background: linear-gradient(135deg, #e7f3ff 0%, #f8f9fa 100%);
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 32px;
+    }
+    .btn-launch {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 16px 40px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      transition: all 0.2s ease;
+    }
+    .btn-launch:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+    }
+    .hero-subtext {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* セクション共通 */
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 40px;
+      color: #1a1a1a;
+    }
+
+    /* 特長グリッド（最初の元のサイズに戻しています） */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+      word-break: keep-all; /* 単語の途中で改行されるのを自然に防ぎます */
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* 使い方ステップ */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: var(--bg-color);
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .step-number {
+      background: var(--primary-color);
+      color: #fff;
+      font-weight: bold;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-    }
-    .btn:hover { background: #e9ecef; }
-    .btn-primary { background: #007bff; color: white; border: none; }
-    .btn-primary:hover { background: #0056b3; }
-    .btn-import { background: #17a2b8; color: white; border: none; }
-    .btn-import:hover { background: #138496; }
-    .btn-sync { background: #28a745; color: white; border: none; }
-    .btn-sync:hover { background: #218838; }
-
-    .import-bar { display: flex; gap: 4px; }
-    .import-bar .btn { flex: 1; }
-
-    .action-bar { display: flex; gap: 4px; flex-wrap: wrap; }
-
-    #tree-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 8px;
-      font-size: 14px;
-      outline: none;
-    }
-    #tree-container:focus { box-shadow: inset 0 0 0 2px #007bff; }
-
-    ul.tree-list { list-style: none; padding-left: 16px; }
-    #tree-container > ul.tree-list { padding-left: 0; }
-    
-    .tree-node {
-      display: flex;
-      align-items: center;
-      padding: 4px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      user-select: none;
-      margin: 2px 0;
-      border: 1px solid transparent;
-    }
-    .tree-node:hover { background: #e9ecef; }
-    .tree-node.focused { border-color: #007bff; background: #e7f3ff; }
-    .tree-node.selected { background: #007bff; color: white; }
-    .tree-node.cut { opacity: 0.5; border: 1px dashed #999; }
-    .tree-node.drag-over {
-      background-color: #d0e1fd !important;
-      border: 1px dashed #007bff !important;
-      color: #000 !important;
-    }
-    .tree-toggle {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
-      text-align: center;
-      font-size: 10px;
-      margin-right: 4px;
-      color: #666;
-      cursor: pointer;
-    }
-    .tree-node.selected .tree-toggle { color: #fff; }
-    .tree-icon { margin-right: 6px; }
-
-    #main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: #ffffff;
-      min-width: 0;
-    }
-
-    #tab-bar {
-      display: flex;
-      background: #e9ecef;
-      border-bottom: 1px solid #ced4da;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 4px 4px 0 4px;
-      gap: 4px;
-      scrollbar-width: thin;
-    }
-    #tab-bar::-webkit-scrollbar { height: 4px; }
-    #tab-bar::-webkit-scrollbar-thumb { background: #bbb; border-radius: 2px; }
-
-    .tab {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      font-size: 13px;
-      background: #dee2e6;
-      border: 1px solid #ced4da;
-      border-bottom: none;
-      border-radius: 6px 6px 0 0;
-      cursor: pointer;
-      user-select: none;
-      width: 180px;
-      min-width: 100px;
-      flex-shrink: 0;
-      transition: background 0.1s;
-    }
-    .tab.active {
-      background: #ffffff;
-      font-weight: bold;
-      border-bottom: 1px solid #ffffff;
-      margin-bottom: -1px;
-    }
-    .tab.tab-drag-over { border-left: 3px solid #007bff; }
-    
-    .tab-title {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .tab-close {
-      font-size: 12px;
-      color: #888;
-      border-radius: 50%;
-      padding: 0 4px;
       flex-shrink: 0;
     }
-    .tab-close:hover { background: #ccc; color: #000; }
-
-    .editor-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      overflow: hidden;
-    }
-
-    .main-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      flex-shrink: 0;
-    }
-
-    #current-path { font-size: 14px; font-weight: bold; color: #495057; }
-
-    textarea {
-      flex: 1;
-      width: 100%;
-      padding: 16px;
-      padding-bottom: 6em;
-      font-size: 15px;
-      line-height: 1.6;
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      resize: none;
-      outline: none;
-      overflow-y: auto;
-    }
-    textarea:focus { border-color: #007bff; }
-
-    #status { font-size: 13px; color: #28a745; font-weight: bold; }
-
-    /* 右側検索スライドパネル */
-    #search-panel {
-      width: 320px;
-      background: #ffffff;
-      border-left: 1px solid #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      transition: margin-right 0.2s ease-in-out;
-    }
-
-    #search-panel.hidden {
-      display: none;
-    }
-
-    .search-panel-header {
-      padding: 12px;
-      border-bottom: 1px solid #e0e0e0;
-      background: #f1f3f5;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .search-panel-header h3 {
-      font-size: 14px;
-      color: #333;
-    }
-
-    .btn-close-panel {
-      background: transparent;
-      border: none;
+    .step-content h3 {
       font-size: 18px;
-      cursor: pointer;
-      color: #666;
-      padding: 0 4px;
-      line-height: 1;
+      margin-bottom: 6px;
     }
-    .btn-close-panel:hover { color: #000; }
+    .step-content p {
+      font-size: 14px;
+      color: #555;
+    }
 
-    .search-panel-body {
-      padding: 12px;
+    /* よくある質問 */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      flex: 1;
-      overflow: hidden;
+      gap: 16px;
+    }
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .faq-question {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+    }
+    .faq-answer {
+      font-size: 14px;
+      color: #555;
     }
 
-    .search-box {
-      width: 100%;
-      padding: 8px 10px;
+    /* フッターCTA */
+    .cta-section {
+      background: var(--bg-color);
+      text-align: center;
+      padding: 60px 20px;
+      margin-top: 40px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
       font-size: 13px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      outline: none;
-    }
-    .search-box:focus { border-color: #007bff; }
-
-    #search-results-list {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      color: #888;
+      border-top: 1px solid var(--border-color);
     }
 
-    .search-file-group {
-      border: 1px solid #e9ecef;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .search-file-header {
-      background: #e7f3ff;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: bold;
-      color: #007bff;
-      border-bottom: 1px solid #d0e1fd;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .search-hit-item {
-      padding: 6px 10px;
-      font-size: 12px;
-      cursor: pointer;
-      border-bottom: 1px solid #f8f9fa;
-      background: #fff;
-    }
-    .search-hit-item:last-child { border-bottom: none; }
-    .search-hit-item:hover { background: #f1f3f5; }
-
-    .search-hit-line {
-      font-size: 11px;
-      color: #28a745;
-      font-weight: bold;
-      margin-right: 6px;
-    }
-
-    .search-hit-snippet {
-      color: #495057;
-      word-break: break-all;
-    }
-
-    .search-highlight-text {
-      background-color: #ffe066;
-      font-weight: bold;
-      border-radius: 2px;
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 15px; }
+      .step-item { flex-direction: column; gap: 10px; }
     }
   </style>
 </head>
 <body>
 
-  <div id="sidebar">
-    <div class="sidebar-header">
-      <div class="import-bar">
-        <button class="btn btn-import" onclick="document.getElementById('fileInput').click()">📄 ファイル選択 (.txt)</button>
-        <button class="btn btn-import" onclick="document.getElementById('folderInput').click()">📂 フォルダ選択</button>
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">📂 多機能ツリーメモ</a>
+      <a href="app.html" class="btn-launch" style="padding: 8px 16px; font-size: 14px;">アプリを起動する</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ヒーローセクション -->
+    <section class="hero">
+      <div class="hero-container">
+        <h1>思考をクリアに整理する<br>ブラウザ完結型ツリーメモ帳</h1>
+        <p>会員登録不要・完全無料。フォルダによる階層管理と強力な横断検索、PCローカルフォルダへの<br>一括自動同期を備えたシンプルなメモツールです。</p>
+        <a href="app.html" class="btn-launch">今すぐアプリを使う（登録不要）</a>
+        <p class="hero-subtext">※インストール不要・ブラウザ上ですぐに起動します</p>
       </div>
+    </section>
 
-      <input type="file" id="fileInput" accept=".txt,text/plain" multiple style="display: none;" onchange="handleFileSelect(event)">
-      <input type="file" id="folderInput" webkitdirectory style="display: none;" onchange="handleFolderSelect(event)">
-
-      <button class="btn btn-sync" onclick="connectDirectory()">💾 ローカル同期先フォルダを選択</button>
-
-      <button class="btn btn-primary" onclick="toggleSearchPanel(true)">🔍 ファイル内・全メモ検索 (Ctrl+F)</button>
-      
-      <div class="action-bar">
-        <button class="btn" onclick="createItem('folder')">📁+ フォルダ</button>
-        <button class="btn" onclick="createItem('file')">📄+ メモ</button>
-        <button class="btn" onclick="renameSelectedItems()">✏️ 名前変更</button>
-        <button class="btn" onclick="copySelectedItems()">📋 コピー</button>
-        <button class="btn" onclick="cutSelectedItems()">✂️ 切り取り</button>
-        <button class="btn" onclick="pasteItems()">📥 貼り付け</button>
-        <button class="btn" onclick="deleteSelectedItems()" style="color:red;">🗑️ 削除</button>
-      </div>
-    </div>
-
-    <div id="tree-container" tabindex="0"></div>
-  </div>
-
-  <div id="main-content">
-    <div id="tab-bar"></div>
-
-    <div class="editor-wrapper">
-      <div class="main-header">
-        <span id="current-path">項目を選択してください</span>
-        <div>
-          <span id="status"></span>
-          <button class="btn btn-primary" onclick="saveAllToDisk()">💾 ローカルフォルダへ一括保存 (Ctrl+S)</button>
-        </div>
-      </div>
-      <textarea id="memo" placeholder="メモの内容を入力..." disabled oninput="onMemoInput()"></textarea>
-    </div>
-  </div>
-
-  <!-- 右側検索フレーム -->
-  <div id="search-panel" class="hidden">
-    <div class="search-panel-header">
-      <h3>🔍 全メモから検索</h3>
-      <button class="btn-close-panel" onclick="toggleSearchPanel(false)">×</button>
-    </div>
-    <div class="search-panel-body">
-      <input type="text" id="panelSearchInput" class="search-box" placeholder="検索キーワードを入力..." oninput="executePanelSearch()">
-      <div id="search-results-list"></div>
-    </div>
-  </div>
-
-  <script>
-    let fileTree = JSON.parse(localStorage.getItem('memo_tree_data')) || {
-      id: 'root', name: 'ルート', type: 'folder', children: []
-    };
-
-    let recentTabs = JSON.parse(localStorage.getItem('memo_recent_tabs')) || [];
-    let activeTabId = null;
-    let selectedNodeIds = new Set();
-    let focusedNodeId = null;
-    let anchorNodeId = null;
-
-    let clipboard = null;
-    let dirHandle = null;
-    let draggedNodeIds = [];
-    let draggedTabId = null;
-
-    window.onload = () => {
-      renderTree();
-      renderTabs();
-      if (recentTabs.length > 0) {
-        openFile(recentTabs[0].id);
-      }
-
-      const tabBar = document.getElementById('tab-bar');
-      tabBar.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-          e.preventDefault();
-          tabBar.scrollLeft += e.deltaY;
-        }
-      }, { passive: false });
-
-      setupTreeKeyboardShortcuts();
-
-      window.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
-          e.preventDefault();
-          toggleSearchPanel(true);
-        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-          e.preventDefault();
-          saveAllToDisk();
-        } else if (e.key === 'Escape') {
-          toggleSearchPanel(false);
-        }
-      });
-    };
-
-    function toggleSearchPanel(show) {
-      const panel = document.getElementById('search-panel');
-      const input = document.getElementById('panelSearchInput');
-      
-      if (show === undefined) {
-        panel.classList.toggle('hidden');
-      } else if (show) {
-        panel.classList.remove('hidden');
-      } else {
-        panel.classList.add('hidden');
-      }
-
-      if (!panel.classList.contains('hidden')) {
-        input.focus();
-        input.select();
-      }
-    }
-
-    function saveTreeToStorage() {
-      localStorage.setItem('memo_tree_data', JSON.stringify(fileTree));
-    }
-
-    function saveTabsToStorage() {
-      localStorage.setItem('memo_recent_tabs', JSON.stringify(recentTabs));
-    }
-
-    document.getElementById('tree-container').onclick = (e) => {
-      if (e.target.id === 'tree-container') {
-        clearSelection();
-      }
-    };
-
-    function clearSelection() {
-      selectedNodeIds.clear();
-      focusedNodeId = null;
-      anchorNodeId = null;
-      renderTree();
-    }
-
-    function showStatus(msg) {
-      const el = document.getElementById('status');
-      el.textContent = msg;
-      setTimeout(() => { el.textContent = ''; }, 3000);
-    }
-
-    function findNodeById(node, id) {
-      if (!node) return null;
-      if (node.id === id) return node;
-      if (node.children) {
-        for (const child of node.children) {
-          const res = findNodeById(child, id);
-          if (res) return res;
-        }
-      }
-      return null;
-    }
-
-    function findParentNode(node, id) {
-      if (!node || !node.children) return null;
-      if (node.children.some(c => c.id === id)) return node;
-      for (const child of node.children) {
-        const res = findParentNode(child, id);
-        if (res) return res;
-      }
-      return null;
-    }
-
-    function getNodePath(root, id) {
-      const path = [];
-      function build(node) {
-        if (node.id === id) {
-          path.push(node.name);
-          return true;
-        }
-        if (node.children) {
-          for (const child of node.children) {
-            if (build(child)) {
-              if (node.id !== 'root') path.unshift(node.name);
-              return true;
-            }
-          }
-        }
-        return false;
-      }
-      build(root);
-      return path.join(' / ');
-    }
-
-    function isAncestorOf(ancestorId, targetId) {
-      let parent = findParentNode(fileTree, targetId);
-      while (parent) {
-        if (parent.id === ancestorId) return true;
-        parent = findParentNode(fileTree, parent.id);
-      }
-      return false;
-    }
-
-    function deleteNodeById(node, id) {
-      if (!node || !node.children) return false;
-      
-      const idx = node.children.findIndex(c => c.id === id);
-      if (idx !== -1) {
-        node.children.splice(idx, 1);
-        return true;
-      }
-      
-      for (const child of node.children) {
-        if (child.type === 'folder' && child.children) {
-          if (deleteNodeById(child, id)) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    function cloneNodeWithNewId(node) {
-      const newNode = JSON.parse(JSON.stringify(node));
-      function refreshId(n) {
-        n.id = 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
-        if (n.children) n.children.forEach(refreshId);
-      }
-      refreshId(newNode);
-      return newNode;
-    }
-
-    function getTargetFolderNode(selectedId) {
-      if (!selectedId || selectedId === 'root') return fileTree;
-      const node = findNodeById(fileTree, selectedId);
-      if (!node) return fileTree;
-      if (node.type === 'folder') return node;
-      return findParentNode(fileTree, selectedId) || fileTree;
-    }
-
-    // 同階層の重複チェックヘルパー関数
-    function isDuplicateName(folderNode, name, excludeId = null) {
-      if (!folderNode || !folderNode.children) return false;
-      return folderNode.children.some(child => child.id !== excludeId && child.name.toLowerCase() === name.toLowerCase());
-    }
-
-    // 重複を回避した「 - コピー」形式の統一名を生成する関数
-    function getUniqueName(targetFolder, name) {
-      if (!isDuplicateName(targetFolder, name)) return name;
-
-      let baseName = name;
-      let ext = '';
-      if (name.toLowerCase().endsWith('.txt')) {
-        baseName = name.slice(0, -4);
-        ext = '.txt';
-      }
-
-      // 1回目の重複: 「 - コピー」
-      let newName = `${baseName} - コピー${ext}`;
-      if (!isDuplicateName(targetFolder, newName)) {
-        return newName;
-      }
-
-      // 2回目以降の重複: 「 - コピー (2)」「 - コピー (3)」...
-      let count = 2;
-      while (true) {
-        newName = `${baseName} - コピー (${count})${ext}`;
-        if (!isDuplicateName(targetFolder, newName)) {
-          return newName;
-        }
-        count++;
-      }
-    }
-
-    // .txt 拡張子の補完ヘルパー関数
-    function ensureTxtExtension(filename) {
-      if (!filename.toLowerCase().endsWith('.txt')) {
-        return filename + '.txt';
-      }
-      return filename;
-    }
-
-    function getVisibleNodes(node = fileTree, result = []) {
-      if (node.id !== 'root') {
-        result.push(node);
-      }
-      if (node.children && (node.id === 'root' || !node.collapsed)) {
-        const sortedChildren = [...node.children].sort((a, b) => {
-          if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
-          return a.name.localeCompare(b.name, 'ja', { numeric: true, sensitivity: 'base' });
-        });
-        sortedChildren.forEach(child => getVisibleNodes(child, result));
-      }
-      return result;
-    }
-
-    function setupTreeKeyboardShortcuts() {
-      const container = document.getElementById('tree-container');
-
-      container.addEventListener('keydown', (e) => {
-        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-
-        const visibleNodes = getVisibleNodes();
-        if (visibleNodes.length === 0) return;
-
-        const activeId = focusedNodeId || Array.from(selectedNodeIds)[0];
-        const currentIndex = visibleNodes.findIndex(n => n.id === activeId);
-
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          // 一番下に達している場合はループせず停止
-          const nextIndex = currentIndex < visibleNodes.length - 1 ? currentIndex + 1 : currentIndex;
-          const target = visibleNodes[nextIndex];
-          if (target) {
-            selectNode(target.id, e.ctrlKey || e.metaKey, e.shiftKey);
-            scrollNodeIntoView(target.id);
-          }
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          // 一番上に達している場合はループせず停止
-          const prevIndex = currentIndex > 0 ? currentIndex - 1 : 0;
-          const target = visibleNodes[prevIndex];
-          if (target) {
-            selectNode(target.id, e.ctrlKey || e.metaKey, e.shiftKey);
-            scrollNodeIntoView(target.id);
-          }
-        } else if (e.key === 'Enter') {
-          e.preventDefault();
-          if (activeId) {
-            const node = findNodeById(fileTree, activeId);
-            if (node) {
-              if (node.type === 'file') {
-                openFile(node.id);
-              } else if (node.type === 'folder') {
-                toggleFolder(null, node.id);
-              }
-            }
-          }
-        } else if (e.key === 'ArrowRight') {
-          if (activeId) {
-            const node = findNodeById(fileTree, activeId);
-            if (node && node.type === 'folder') {
-              if (node.collapsed) {
-                node.collapsed = false;
-                renderTree();
-              } else if (node.children && node.children.length > 0) {
-                const firstChild = [...node.children].sort((a,b) => a.type === 'folder' ? -1 : 1)[0];
-                selectNode(firstChild.id, false, false);
-                scrollNodeIntoView(firstChild.id);
-              }
-            }
-          }
-        } else if (e.key === 'ArrowLeft') {
-          if (activeId) {
-            const node = findNodeById(fileTree, activeId);
-            if (node && node.type === 'folder' && !node.collapsed) {
-              node.collapsed = true;
-              renderTree();
-            } else {
-              const parent = findParentNode(fileTree, activeId);
-              if (parent && parent.id !== 'root') {
-                selectNode(parent.id, false, false);
-                scrollNodeIntoView(parent.id);
-              }
-            }
-          }
-        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
-          e.preventDefault();
-          copySelectedItems();
-        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
-          e.preventDefault();
-          cutSelectedItems();
-        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-          e.preventDefault();
-          pasteItems();
-        } else if (e.key === 'Delete' || e.key === 'Backspace') {
-          e.preventDefault();
-          deleteSelectedItems();
-        } else if (e.key === 'F2') {
-          e.preventDefault();
-          renameSelectedItems();
-        }
-      });
-    }
-
-    function scrollNodeIntoView(id) {
-      setTimeout(() => {
-        const el = document.querySelector(`.tree-node[data-id="${id}"]`);
-        if (el) el.scrollIntoView({ block: 'nearest' });
-      }, 5);
-    }
-
-    async function readTextFileWithEncoding(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const buffer = e.target.result;
-          let text = '';
-          try {
-            const decoder = new TextDecoder('utf-8', { fatal: true });
-            text = decoder.decode(buffer);
-          } catch (err) {
-            const decoder = new TextDecoder('shift-jis');
-            text = decoder.decode(buffer);
-          }
-          resolve(text);
-        };
-        reader.onerror = (err) => reject(err);
-        reader.readAsArrayBuffer(file);
-      });
-    }
-
-    // 上書き確認用の補助関数
-    async function confirmOverwrite(filename, state) {
-      if (state.applyAll) return state.action;
-
-      const msg = `「${filename}」は既に存在します。\n上書きしますか？\n\n[OK] 上書き\n[キャンセル] スキップ`;
-      const result = confirm(msg);
-
-      if (result) {
-        if (state.totalCount > 1 && !state.applyAll) {
-          if (confirm('以降の同名ファイルもすべて上書きしますか？')) {
-            state.applyAll = true;
-            state.action = 'overwrite';
-          }
-        }
-        return 'overwrite';
-      } else {
-        if (state.totalCount > 1 && !state.applyAll) {
-          if (confirm('以降の同名ファイルもすべてスキップしますか？')) {
-            state.applyAll = true;
-            state.action = 'skip';
-          }
-        }
-        return 'skip';
-      }
-    }
-
-    async function handleFileSelect(event) {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-
-      const firstSelectedId = Array.from(selectedNodeIds)[0] || focusedNodeId;
-      const targetFolder = getTargetFolderNode(firstSelectedId);
-      targetFolder.collapsed = false;
-
-      let importedCount = 0;
-      let overwrittenCount = 0;
-      let skippedCount = 0;
-
-      const overwriteState = { totalCount: files.length, applyAll: false, action: null };
-
-      for (const file of files) {
-        let fileName = ensureTxtExtension(file.name);
-        const existingNode = targetFolder.children.find(
-          c => c.type === 'file' && c.name.toLowerCase() === fileName.toLowerCase()
-        );
-
-        let action = 'create';
-        if (existingNode) {
-          action = await confirmOverwrite(fileName, overwriteState);
-        }
-
-        if (action === 'skip') {
-          skippedCount++;
-          continue;
-        }
-
-        try {
-          const text = await readTextFileWithEncoding(file);
-          if (action === 'overwrite' && existingNode) {
-            existingNode.content = text;
-            if (activeTabId === existingNode.id) {
-              document.getElementById('memo').value = text;
-            }
-            overwrittenCount++;
-          } else {
-            targetFolder.children.push({
-              id: 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-              name: fileName,
-              type: 'file',
-              content: text
-            });
-            importedCount++;
-          }
-        } catch (err) {
-          console.error('ファイル読み込み失敗:', fileName, err);
-        }
-      }
-
-      let msg = `${importedCount} 個を追加、${overwrittenCount} 個を上書き保存しました`;
-      if (skippedCount > 0) msg += ` (${skippedCount} 個をスキップ)`;
-      showStatus(msg);
-      renderTree();
-      event.target.value = '';
-    }
-
-    async function handleFolderSelect(event) {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-
-      const txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
-      if (txtFiles.length === 0) {
-        showStatus('.txt ファイルが見つかりませんでした');
-        event.target.value = '';
-        return;
-      }
-
-      const firstSelectedId = Array.from(selectedNodeIds)[0] || focusedNodeId;
-      const rootTarget = getTargetFolderNode(firstSelectedId);
-      rootTarget.collapsed = false;
-
-      let importedCount = 0;
-      let overwrittenCount = 0;
-      let skippedCount = 0;
-
-      const overwriteState = { totalCount: txtFiles.length, applyAll: false, action: null };
-
-      for (const file of txtFiles) {
-        const pathSegments = file.webkitRelativePath.split('/');
-        const fileName = ensureTxtExtension(pathSegments.pop());
+    <!-- 主な機能・特長 -->
+    <section id="features">
+      <h2 class="section-title">アプリの主な機能と特長</h2>
+      <div class="features-grid">
         
-        let currentFolder = rootTarget;
-        for (const folderName of pathSegments) {
-          let sub = currentFolder.children.find(c => c.type === 'folder' && c.name.toLowerCase() === folderName.toLowerCase());
-          if (!sub) {
-            sub = {
-              id: 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-              name: folderName,
-              type: 'folder',
-              collapsed: false,
-              children: []
-            };
-            currentFolder.children.push(sub);
-          }
-          currentFolder = sub;
-        }
+        <article class="feature-card">
+          <div class="feature-icon">📁</div>
+          <h3>自由度の高い階層ツリー管理</h3>
+          <p>フォルダとメモを階層構造で直感的に整理。キーボード操作による効率的な操作にも完全対応しています。</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>全メモリアルタイム横断検索</h3>
+          <p>キーワードを入力するだけで、作成したすべてのメモ内から該当テキストを瞬時に抽出。目的のメモや該当行へ一瞬でアクセスできます。</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">💾</div>
+          <h3>ローカルフォルダ同期・保存</h3>
+          <p>FileSystem Access APIに対応。指定したPC上のフォルダへツリー構造のまま一括同期保存（.txtファイル）が可能です。</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">📑</div>
+          <h3>使いやすいタブインターフェース</h3>
+          <p>複数のメモを並行して開けるタブ機能を搭載。タブの並び替えや中クリックでのクイック閉じにも対応し、作業効率を高めます。</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>安心の完全ローカル保存</h3>
+          <p>入力したデータはブラウザの内部ストレージ（LocalStorage）またはお使いのPC内にのみ保存されます。サーバーへ送信されないため安心です。</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>高速で軽快な動作</h3>
+          <p>無駄な読み込みを排除した1ファイルの設計により、立ち上げからメモの入力、保存までストレスなく快適に動作します。</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 使い方 -->
+    <section id="how-to-use">
+      <h2 class="section-title">カンタンな使い方</h2>
+      <div class="steps-list">
+        
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>「アプリを起動する」ボタンを押す</h3>
+            <p>アカウント登録やログインは一切不要です。ボタンを押すだけで即座にエディタ画面が開きます。</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>フォルダやメモを作成して整理</h3>
+            <p>サイドバーのボタンからフォルダやメモを追加。ファイル選択ボタンやフォルダ選択ボタンから、既存の.txtファイルやフォルダを一括読み込むことも可能です。</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>ローカルフォルダへ同期（任意）</h3>
+            <p>「ローカル同期先フォルダを選択」を押してPC上の保存先を指定すれば、作成したメモをローカルの.txtファイルとして一括保存できます。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- よくある質問 (FAQ) -->
+    <section id="faq">
+      <h2 class="section-title">よくある質問 (FAQ)</h2>
+      <div class="faq-list">
+        
+        <div class="faq-item">
+          <div class="faq-question">Q. 利用料金はかかりますか？</div>
+          <div class="faq-answer">A. いいえ、すべての機能を完全無料でご利用いただけます。商用・個人利用を問わずご活用ください。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Q. 入力したメモデータが外部に流出する心配はありますか？</div>
+          <div class="faq-answer">A. データはすべてお客様のお使いのブラウザ内部または指定したローカルフォルダにのみ保存されます。外部のサーバーへ送信されることは一切ありません。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Q. 推奨ブラウザはありますか？</div>
+          <div class="faq-answer">A. Google Chrome または Microsoft Edge の最新版を推奨します（ローカルフォルダ同期機能を利用する場合）。</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 下部CTA -->
+    <div class="cta-section">
+      <h2 style="margin-bottom: 16px;">さっそくメモを作成してみましょう</h2>
+      <p style="margin-bottom: 24px; color: #666;">登録不要で、今すぐブラウザ上でお使いいただけます。</p>
+      <a href="app.html" class="btn-launch">多機能ツリーメモアプリを開く</a>
+    </div>
+  </main>
 
-        const existingNode = currentFolder.children.find(
-          c => c.type === 'file' && c.name.toLowerCase() === fileName.toLowerCase()
-        );
+  <footer>
+    <p>&copy; 多機能ツリーメモ帳 All Rights Reserved.</p>
+  </footer>
 
-        let action = 'create';
-        if (existingNode) {
-          action = await confirmOverwrite(fileName, overwriteState);
-        }
-
-        if (action === 'skip') {
-          skippedCount++;
-          continue;
-        }
-
-        try {
-          const text = await readTextFileWithEncoding(file);
-          if (action === 'overwrite' && existingNode) {
-            existingNode.content = text;
-            if (activeTabId === existingNode.id) {
-              document.getElementById('memo').value = text;
-            }
-            overwrittenCount++;
-          } else {
-            currentFolder.children.push({
-              id: 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-              name: fileName,
-              type: 'file',
-              content: text
-            });
-            importedCount++;
-          }
-        } catch (err) {
-          console.error('ファイル読み込み失敗:', fileName, err);
-        }
-      }
-
-      let msg = `${importedCount} 個を追加、${overwrittenCount} 個を上書き保存しました`;
-      if (skippedCount > 0) msg += ` (${skippedCount} 個をスキップ)`;
-      showStatus(msg);
-      renderTree();
-      event.target.value = '';
-    }
-
-    function createItem(type) {
-      const activeId = Array.from(selectedNodeIds)[0] || focusedNodeId;
-      let targetFolder = fileTree;
-
-      if (activeId) {
-        const node = findNodeById(fileTree, activeId);
-        if (node) {
-          if (node.type === 'folder') {
-            targetFolder = node;
-          } else {
-            targetFolder = findParentNode(fileTree, activeId) || fileTree;
-          }
-        }
-      }
-
-      let name = prompt(type === 'folder' ? 'フォルダ名を入力してください:' : 'メモ名を入力してください:', type === 'folder' ? '新しいフォルダ' : '無題のメモ');
-      if (!name || name.trim() === '') return;
-      name = name.trim();
-
-      if (type === 'file') {
-        name = ensureTxtExtension(name);
-      }
-
-      if (isDuplicateName(targetFolder, name)) {
-        alert(`同階層に「${name}」が既に存在します。別の名前を指定してください。`);
-        return;
-      }
-
-      const newItem = {
-        id: 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-        name: name,
-        type: type,
-        ...(type === 'folder' ? { children: [], collapsed: false } : { content: '' })
-      };
-
-      targetFolder.children.push(newItem);
-      if (targetFolder.type === 'folder') targetFolder.collapsed = false;
-
-      renderTree();
-      selectNode(newItem.id, false, false);
-      if (type === 'file') openFile(newItem.id);
-    }
-
-    function renameSelectedItems() {
-      const activeId = Array.from(selectedNodeIds)[0] || focusedNodeId;
-      if (!activeId) return;
-
-      const node = findNodeById(fileTree, activeId);
-      if (!node) return;
-
-      const parentFolder = findParentNode(fileTree, activeId) || fileTree;
-
-      let newName = prompt('新しい名前を入力してください:', node.name);
-      if (!newName || newName.trim() === '') return;
-      newName = newName.trim();
-
-      if (node.type === 'file') {
-        newName = ensureTxtExtension(newName);
-      }
-
-      if (isDuplicateName(parentFolder, newName, node.id)) {
-        alert(`同階層に「${newName}」が既に存在します。別の名前を指定してください。`);
-        return;
-      }
-
-      node.name = newName;
-      const tab = recentTabs.find(t => t.id === node.id);
-      if (tab) tab.name = node.name;
-      saveTabsToStorage();
-      renderTree();
-      renderTabs();
-      if (activeTabId === node.id) {
-        document.getElementById('current-path').textContent = getNodePath(fileTree, node.id);
-      }
-    }
-
-    function copySelectedItems() {
-      if (selectedNodeIds.size === 0 && focusedNodeId) selectedNodeIds.add(focusedNodeId);
-      if (selectedNodeIds.size === 0) return;
-
-      clipboard = {
-        action: 'copy',
-        nodes: Array.from(selectedNodeIds).map(id => findNodeById(fileTree, id)).filter(Boolean)
-      };
-      showStatus(`${clipboard.nodes.length} 個の項目をコピーしました`);
-      renderTree();
-    }
-
-    function cutSelectedItems() {
-      if (selectedNodeIds.size === 0 && focusedNodeId) selectedNodeIds.add(focusedNodeId);
-      if (selectedNodeIds.size === 0) return;
-
-      clipboard = {
-        action: 'cut',
-        nodes: Array.from(selectedNodeIds).map(id => findNodeById(fileTree, id)).filter(Boolean)
-      };
-      showStatus(`${clipboard.nodes.length} 個の項目を切り取りました`);
-      renderTree();
-    }
-
-    function pasteItems() {
-      if (!clipboard || !clipboard.nodes.length) return;
-
-      const activeId = Array.from(selectedNodeIds)[0] || focusedNodeId;
-      const targetFolder = getTargetFolderNode(activeId);
-      targetFolder.collapsed = false;
-
-      let pastedCount = 0;
-
-      clipboard.nodes.forEach(node => {
-        if (clipboard.action === 'copy') {
-          const cloned = cloneNodeWithNewId(node);
-          cloned.name = getUniqueName(targetFolder, cloned.name);
-          targetFolder.children.push(cloned);
-          pastedCount++;
-        } else if (clipboard.action === 'cut') {
-          if (!isAncestorOf(node.id, targetFolder.id) && node.id !== targetFolder.id) {
-            const currentParent = findParentNode(fileTree, node.id);
-            if (currentParent && currentParent.id === targetFolder.id) {
-              return;
-            }
-            if (isDuplicateName(targetFolder, node.name, node.id)) {
-              alert(`貼り付け先に同名の項目「${node.name}」が存在するため貼り付けできませんでした。`);
-              return;
-            }
-            deleteNodeById(fileTree, node.id);
-            targetFolder.children.push(node);
-            pastedCount++;
-          }
-        }
-      });
-
-      if (pastedCount > 0) {
-        showStatus(`${pastedCount} 個の項目を貼り付けました`);
-        if (clipboard.action === 'cut') clipboard = null;
-        renderTree();
-      }
-    }
-
-    function deleteSelectedItems() {
-      if (selectedNodeIds.size === 0 && focusedNodeId) selectedNodeIds.add(focusedNodeId);
-      if (selectedNodeIds.size === 0) return;
-
-      if (!confirm(`${selectedNodeIds.size} 個の項目を削除しますか？`)) return;
-
-      const targets = Array.from(selectedNodeIds);
-
-      const idsToDelete = targets.filter(id => {
-        return !targets.some(otherId => otherId !== id && isAncestorOf(otherId, id));
-      });
-
-      idsToDelete.forEach(id => {
-        deleteNodeById(fileTree, id);
-        closeTab(null, id);
-      });
-
-      clearSelection();
-      showStatus('削除しました');
-    }
-
-    function renderTree() {
-      const container = document.getElementById('tree-container');
-      container.innerHTML = '';
-      container.appendChild(createTreeDOM(fileTree));
-      saveTreeToStorage();
-    }
-
-    function createTreeDOM(node) {
-      const ul = document.createElement('ul');
-      ul.className = 'tree-list';
-
-      if (node.children) {
-        const sortedChildren = [...node.children].sort((a, b) => {
-          if (a.type !== b.type) {
-            return a.type === 'folder' ? -1 : 1;
-          }
-          return a.name.localeCompare(b.name, 'ja', { numeric: true, sensitivity: 'base' });
-        });
-
-        sortedChildren.forEach(child => {
-          const li = document.createElement('li');
-          const div = document.createElement('div');
-          div.className = 'tree-node';
-          div.setAttribute('draggable', 'true');
-          div.dataset.id = child.id;
-
-          if (selectedNodeIds.has(child.id)) div.classList.add('selected');
-          if (focusedNodeId === child.id && !selectedNodeIds.has(child.id)) div.classList.add('focused');
-          if (clipboard && clipboard.action === 'cut' && clipboard.nodes.some(n => n.id === child.id)) {
-            div.classList.add('cut');
-          }
-
-          let toggleHtml = '<span class="tree-toggle"></span>';
-          if (child.type === 'folder') {
-            const isCollapsed = !!child.collapsed;
-            const arrow = isCollapsed ? '▶' : '▼';
-            toggleHtml = `<span class="tree-toggle" onclick="toggleFolder(event, '${child.id}')">${arrow}</span>`;
-          }
-
-          const icon = child.type === 'folder' ? (child.collapsed ? '📁' : '📂') : '📄';
-          div.innerHTML = `${toggleHtml}<span class="tree-icon">${icon}</span><span>${child.name}</span>`;
-
-          div.onclick = (e) => {
-            e.stopPropagation();
-            selectNode(child.id, e.ctrlKey || e.metaKey, e.shiftKey);
-          };
-
-          div.ondblclick = (e) => {
-            e.stopPropagation();
-            if (child.type === 'folder') {
-              toggleFolder(e, child.id);
-            } else {
-              openFile(child.id);
-            }
-          };
-
-          div.ondragstart = (e) => {
-            e.stopPropagation();
-            if (!selectedNodeIds.has(child.id)) {
-              selectNode(child.id, false, false);
-            }
-            draggedNodeIds = Array.from(selectedNodeIds);
-            e.dataTransfer.effectAllowed = (e.ctrlKey || e.metaKey) ? 'copy' : 'move';
-          };
-
-          div.ondragover = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (draggedNodeIds.includes(child.id) || draggedNodeIds.some(id => isAncestorOf(id, child.id))) {
-              e.dataTransfer.dropEffect = 'none';
-              return;
-            }
-            e.dataTransfer.dropEffect = (e.ctrlKey || e.metaKey) ? 'copy' : 'move';
-            div.classList.add('drag-over');
-          };
-
-          div.ondragleave = (e) => {
-            e.stopPropagation();
-            div.classList.remove('drag-over');
-          };
-
-          div.ondrop = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            div.classList.remove('drag-over');
-
-            if (!draggedNodeIds.length || draggedNodeIds.includes(child.id) || draggedNodeIds.some(id => isAncestorOf(id, child.id))) return;
-
-            const targetFolder = child.type === 'folder' ? child : getTargetFolderNode(child.id);
-            const isCopy = e.ctrlKey || e.metaKey;
-
-            draggedNodeIds.forEach(id => {
-              const draggedNode = findNodeById(fileTree, id);
-              if (!draggedNode) return;
-
-              if (isCopy) {
-                const clonedNode = cloneNodeWithNewId(draggedNode);
-                clonedNode.name = getUniqueName(targetFolder, clonedNode.name);
-                targetFolder.children.push(clonedNode);
-              } else {
-                if (isDuplicateName(targetFolder, draggedNode.name, draggedNode.id)) {
-                  alert(`ドロップ先に同名の項目「${draggedNode.name}」が存在するため配置できません。`);
-                  return;
-                }
-                deleteNodeById(fileTree, id);
-                targetFolder.children.push(draggedNode);
-              }
-            });
-
-            showStatus(isCopy ? 'コピーしました' : '移動しました');
-            draggedNodeIds = [];
-            renderTree();
-          };
-
-          li.appendChild(div);
-
-          if (child.type === 'folder' && child.children && child.children.length > 0) {
-            if (!child.collapsed) {
-              li.appendChild(createTreeDOM(child));
-            }
-          }
-          ul.appendChild(li);
-        });
-      }
-      return ul;
-    }
-
-    function toggleFolder(event, folderId) {
-      if (event) event.stopPropagation();
-      const folder = findNodeById(fileTree, folderId);
-      if (folder && folder.type === 'folder') {
-        folder.collapsed = !folder.collapsed;
-        renderTree();
-      }
-    }
-
-    function ensureParentFoldersOpen(nodeId) {
-      let parent = findParentNode(fileTree, nodeId);
-      while (parent) {
-        if (parent.type === 'folder') parent.collapsed = false;
-        parent = findParentNode(fileTree, parent.id);
-      }
-    }
-
-    function selectNode(id, isMulti, isRange) {
-      const node = findNodeById(fileTree, id);
-      if (!node) return;
-
-      ensureParentFoldersOpen(id);
-
-      if (isRange && (anchorNodeId || focusedNodeId)) {
-        const baseAnchor = anchorNodeId || focusedNodeId;
-        const visibleNodes = getVisibleNodes();
-        const startIdx = visibleNodes.findIndex(n => n.id === baseAnchor);
-        const endIdx = visibleNodes.findIndex(n => n.id === id);
-
-        if (startIdx !== -1 && endIdx !== -1) {
-          selectedNodeIds.clear();
-          const min = Math.min(startIdx, endIdx);
-          const max = Math.max(startIdx, endIdx);
-          for (let i = min; i <= max; i++) {
-            selectedNodeIds.add(visibleNodes[i].id);
-          }
-        }
-      } else if (isMulti) {
-        if (selectedNodeIds.has(id)) {
-          selectedNodeIds.delete(id);
-        } else {
-          selectedNodeIds.add(id);
-        }
-        anchorNodeId = id;
-      } else {
-        selectedNodeIds.clear();
-        selectedNodeIds.add(id);
-        anchorNodeId = id;
-      }
-
-      focusedNodeId = id;
-      
-      document.getElementById('tree-container').focus();
-      renderTree();
-    }
-
-    function openFile(id, targetMatchIndex = -1, matchLength = 0) {
-      const node = findNodeById(fileTree, id);
-      if (!node || node.type !== 'file') return;
-
-      selectNode(id, false, false);
-      activeTabId = id;
-
-      addRecentTab(node);
-      
-      const textarea = document.getElementById('memo');
-      textarea.disabled = false;
-      textarea.value = node.content || '';
-      document.getElementById('current-path').textContent = getNodePath(fileTree, node.id);
-
-      if (targetMatchIndex >= 0 && matchLength > 0) {
-        setTimeout(() => {
-          textarea.focus();
-          textarea.setSelectionRange(targetMatchIndex, targetMatchIndex + matchLength);
-          
-          const textUpToMatch = node.content.substring(0, targetMatchIndex);
-          const lineNum = textUpToMatch.split('\n').length;
-          const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 24;
-          textarea.scrollTop = Math.max(0, (lineNum - 3) * lineHeight);
-        }, 50);
-      }
-
-      renderTabs();
-    }
-
-    function onMemoInput() {
-      if (!activeTabId) return;
-
-      const textarea = document.getElementById('memo');
-      const node = findNodeById(fileTree, activeTabId);
-      if (node && node.type === 'file') {
-        node.content = textarea.value;
-        saveTreeToStorage();
-      }
-
-      const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 24;
-      const textUpToCaret = textarea.value.substring(0, textarea.selectionStart);
-      const currentLineNum = textUpToCaret.split('\n').length;
-      
-      const cursorY = currentLineNum * lineHeight;
-      const visibleBottom = textarea.scrollTop + textarea.clientHeight;
-      const margin = lineHeight * 3;
-
-      if (cursorY + margin > visibleBottom) {
-        textarea.scrollTop = cursorY + margin - textarea.clientHeight;
-      }
-    }
-
-    function addRecentTab(node) {
-      if (node.type !== 'file') return;
-      const existingIndex = recentTabs.findIndex(tab => tab.id === node.id);
-      if (existingIndex === -1) {
-        recentTabs.unshift({ id: node.id, name: node.name });
-        if (recentTabs.length > 15) recentTabs.pop();
-      }
-      saveTabsToStorage();
-      renderTabs();
-    }
-
-    function closeTab(event, tabId) {
-      if (event) event.stopPropagation();
-      recentTabs = recentTabs.filter(t => t.id !== tabId);
-      saveTabsToStorage();
-
-      if (activeTabId === tabId) {
-        if (recentTabs.length > 0) {
-          openFile(recentTabs[0].id);
-        } else {
-          activeTabId = null;
-          document.getElementById('memo').disabled = true;
-          document.getElementById('memo').value = '';
-          document.getElementById('current-path').textContent = '項目を選択してください';
-          renderTabs();
-        }
-      } else {
-        renderTabs();
-      }
-    }
-
-    function renderTabs() {
-      const tabBar = document.getElementById('tab-bar');
-      tabBar.innerHTML = '';
-
-      recentTabs.forEach((tab, index) => {
-        const tabEl = document.createElement('div');
-        const isActive = activeTabId === tab.id;
-        tabEl.className = 'tab' + (isActive ? ' active' : '');
-        tabEl.title = tab.name;
-        tabEl.setAttribute('draggable', 'true');
-        tabEl.dataset.id = tab.id;
-        tabEl.dataset.index = index;
-
-        tabEl.innerHTML = `
-          <span class="tab-title">📄 ${tab.name}</span>
-          <span class="tab-close" onclick="closeTab(event, '${tab.id}')">×</span>
-        `;
-
-        tabEl.onclick = () => openFile(tab.id);
-
-        tabEl.addEventListener('mousedown', (e) => {
-          if (e.button === 1) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeTab(e, tab.id);
-          }
-        });
-
-        tabEl.ondragstart = (e) => {
-          e.stopPropagation();
-          draggedTabId = tab.id;
-          e.dataTransfer.effectAllowed = 'move';
-        };
-
-        tabEl.ondragover = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (draggedTabId && draggedTabId !== tab.id) {
-            tabEl.classList.add('tab-drag-over');
-          }
-        };
-
-        tabEl.ondragleave = (e) => {
-          e.stopPropagation();
-          tabEl.classList.remove('tab-drag-over');
-        };
-
-        tabEl.ondrop = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          tabEl.classList.remove('tab-drag-over');
-
-          if (draggedTabId && draggedTabId !== tab.id) {
-            const dragIdx = recentTabs.findIndex(t => t.id === draggedTabId);
-            const dropIdx = recentTabs.findIndex(t => t.id === tab.id);
-
-            if (dragIdx !== -1 && dropIdx !== -1) {
-              const [movedTab] = recentTabs.splice(dragIdx, 1);
-              recentTabs.splice(dropIdx, 0, movedTab);
-              saveTabsToStorage();
-              renderTabs();
-            }
-          }
-          draggedTabId = null;
-        };
-
-        tabBar.appendChild(tabEl);
-      });
-    }
-
-    function executePanelSearch() {
-      const query = document.getElementById('panelSearchInput').value.trim();
-      const resultsContainer = document.getElementById('search-results-list');
-      resultsContainer.innerHTML = '';
-
-      if (!query) return;
-
-      const queryLower = query.toLowerCase();
-      const hitsByFile = new Map();
-
-      function searchNode(node) {
-        if (node.type === 'file') {
-          const content = node.content || '';
-          const contentLower = content.toLowerCase();
-          let index = contentLower.indexOf(queryLower);
-
-          while (index !== -1) {
-            const textUpToMatch = content.substring(0, index);
-            const lineNum = textUpToMatch.split('\n').length;
-            
-            const lineStart = content.lastIndexOf('\n', index) + 1;
-            let lineEnd = content.indexOf('\n', index);
-            if (lineEnd === -1) lineEnd = content.length;
-            const lineText = content.substring(lineStart, lineEnd);
-
-            if (!hitsByFile.has(node.id)) {
-              hitsByFile.set(node.id, { node, hits: [] });
-            }
-
-            hitsByFile.get(node.id).hits.push({
-              matchIndex: index,
-              matchLength: query.length,
-              lineNum,
-              lineText,
-              query
-            });
-
-            index = contentLower.indexOf(queryLower, index + query.length);
-          }
-        }
-        if (node.children) {
-          node.children.forEach(searchNode);
-        }
-      }
-
-      searchNode(fileTree);
-
-      if (hitsByFile.size === 0) {
-        resultsContainer.innerHTML = '<div style="color: #888; padding: 8px; font-size: 13px;">該当する項目が見つかりません</div>';
-        return;
-      }
-
-      hitsByFile.forEach(({ node, hits }) => {
-        const fileGroup = document.createElement('div');
-        fileGroup.className = 'search-file-group';
-
-        const fileHeader = document.createElement('div');
-        fileHeader.className = 'search-file-header';
-        fileHeader.textContent = `📄 ${node.name} (${hits.length})`;
-        fileGroup.appendChild(fileHeader);
-
-        hits.forEach(hit => {
-          const item = document.createElement('div');
-          item.className = 'search-hit-item';
-          
-          const highlightedSnippet = highlightText(hit.lineText, hit.query);
-          item.innerHTML = `<span class="search-hit-line">L${hit.lineNum}:</span><span class="search-hit-snippet">${highlightedSnippet}</span>`;
-
-          item.onclick = () => {
-            openFile(node.id, hit.matchIndex, hit.matchLength);
-          };
-
-          fileGroup.appendChild(item);
-        });
-
-        resultsContainer.appendChild(fileGroup);
-      });
-    }
-
-    function highlightText(text, query) {
-      if (!query) return escapeHtml(text);
-      const escaped = escapeHtml(text);
-      const reg = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-      return escaped.replace(reg, match => `<span class="search-highlight-text">${match}</span>`);
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    async function connectDirectory() {
-      if (!('showDirectoryPicker' in window)) {
-        alert('お使いのブラウザはローカルフォルダ同期(FileSystem Access API)に対応していません。ChromeまたはEdgeをご利用ください。');
-        return;
-      }
-      try {
-        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-        showStatus(`同期先: 「${dirHandle.name}」 フォルダを接続しました`);
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.error('フォルダ接続エラー:', err);
-          alert('フォルダの選択に失敗しました。');
-        }
-      }
-    }
-
-    async function saveAllToDisk() {
-      if (!dirHandle) {
-        if (confirm('ローカルの保存先フォルダが選択されていません。保存先を選択しますか？')) {
-          await connectDirectory();
-          if (!dirHandle) return;
-        } else {
-          return;
-        }
-      }
-
-      try {
-        showStatus('ローカルに一括保存中...');
-        await writeNodeToDirectory(fileTree, dirHandle);
-        showStatus('ローカルフォルダへの保存が完了しました！');
-      } catch (err) {
-        console.error('保存失敗:', err);
-        alert('ファイルの保存中にエラーが発生しました。');
-      }
-    }
-
-    async function writeNodeToDirectory(node, parentDirHandle) {
-      if (node.id === 'root') {
-        if (node.children) {
-          for (const child of node.children) {
-            await writeNodeToDirectory(child, parentDirHandle);
-          }
-        }
-        return;
-      }
-
-      if (node.type === 'folder') {
-        const subDirHandle = await parentDirHandle.getDirectoryHandle(node.name, { create: true });
-        if (node.children) {
-          for (const child of node.children) {
-            await writeNodeToDirectory(child, subDirHandle);
-          }
-        }
-      } else if (node.type === 'file') {
-        const fileHandle = await parentDirHandle.getFileHandle(node.name, { create: true });
-        const writable = await fileHandle.createWritable();
-        await writable.write(node.content || '');
-        await writable.close();
-      }
-    }
-  </script>
 </body>
 </html>
