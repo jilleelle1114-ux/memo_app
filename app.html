@@ -3,21 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 検索結果に表示されるタイトル -->
-  <title>無料の多機能ツリーメモ帳｜ブラウザで動くローカル同期対応Webアプリ</title>
-
-  <!-- 検索結果のタイトルの下に表示される説明文 -->
-  <meta name="description" content="ブラウザ上で動作する無料の多機能ツリー構造メモアプリ。フォルダ管理、タグ・タブ表示、全メモ横断検索、ドラッグ＆ドロップ操作、ローカルフォルダへの一括自動保存に対応。登録不要ですぐに使えます。">
-
-  <!-- 検索キーワードの設定 -->
-  <meta name="keywords" content="ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ">
-
-  <!-- SNSでシェアされた時の表示設定（OGPタグ） -->
-  <meta property="og:title" content="無料の多機能ツリーメモ帳">
-  <meta property="og:description" content="ブラウザで動作する高機能ツリー構造メモアプリ。登録不要・ローカル同期対応。">
-  <meta property="og:type" content="website">
-
+  <title>多機能ツリーメモアプリ</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -81,6 +67,24 @@
       outline: none;
     }
     #tree-container:focus { box-shadow: inset 0 0 0 2px #007bff; }
+
+    /* 初回案内用のスタイル */
+    .tree-empty-notice {
+      padding: 16px;
+      color: #6c757d;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+      background: #f8f9fa;
+      border: 1px dashed #ced4da;
+      border-radius: 6px;
+      margin: 12px 8px;
+    }
+    .tree-empty-notice p {
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #495057;
+    }
 
     ul.tree-list { list-style: none; padding-left: 16px; }
     #tree-container > ul.tree-list { padding-left: 0; }
@@ -212,6 +216,10 @@
       overflow-y: auto;
     }
     textarea:focus { border-color: #007bff; }
+    textarea:disabled {
+      background-color: #f8f9fa;
+      cursor: not-allowed;
+    }
 
     #status { font-size: 13px; color: #28a745; font-weight: bold; }
 
@@ -370,7 +378,7 @@
           <button class="btn btn-primary" onclick="saveAllToDisk()">💾 ローカルフォルダへ一括保存 (Ctrl+S)</button>
         </div>
       </div>
-      <textarea id="memo" placeholder="メモの内容を入力..." disabled oninput="onMemoInput()"></textarea>
+      <textarea id="memo" placeholder="メモを選択するか、新規作成してください" disabled oninput="onMemoInput()"></textarea>
     </div>
   </div>
 
@@ -407,6 +415,8 @@
       renderTabs();
       if (recentTabs.length > 0) {
         openFile(recentTabs[0].id);
+      } else {
+        clearEditor();
       }
 
       const tabBar = document.getElementById('tab-bar');
@@ -431,6 +441,15 @@
         }
       });
     };
+
+    function clearEditor() {
+      activeTabId = null;
+      const memoEl = document.getElementById('memo');
+      memoEl.disabled = true;
+      memoEl.value = '';
+      memoEl.placeholder = 'メモを選択するか、新規作成してください';
+      document.getElementById('current-path').textContent = '項目を選択してください';
+    }
 
     function toggleSearchPanel(show) {
       const panel = document.getElementById('search-panel');
@@ -566,13 +585,11 @@
       return findParentNode(fileTree, selectedId) || fileTree;
     }
 
-    // 同階層の重複チェックヘルパー関数
     function isDuplicateName(folderNode, name, excludeId = null) {
       if (!folderNode || !folderNode.children) return false;
       return folderNode.children.some(child => child.id !== excludeId && child.name.toLowerCase() === name.toLowerCase());
     }
 
-    // 重複を回避した「 - コピー」形式の統一名を生成する関数
     function getUniqueName(targetFolder, name) {
       if (!isDuplicateName(targetFolder, name)) return name;
 
@@ -583,13 +600,11 @@
         ext = '.txt';
       }
 
-      // 1回目の重複: 「 - コピー」
       let newName = `${baseName} - コピー${ext}`;
       if (!isDuplicateName(targetFolder, newName)) {
         return newName;
       }
 
-      // 2回目以降の重複: 「 - コピー (2)」「 - コピー (3)」...
       let count = 2;
       while (true) {
         newName = `${baseName} - コピー (${count})${ext}`;
@@ -600,7 +615,6 @@
       }
     }
 
-    // .txt 拡張子の補完ヘルパー関数
     function ensureTxtExtension(filename) {
       if (!filename.toLowerCase().endsWith('.txt')) {
         return filename + '.txt';
@@ -636,7 +650,6 @@
 
         if (e.key === 'ArrowDown') {
           e.preventDefault();
-          // 一番下に達している場合はループせず停止
           const nextIndex = currentIndex < visibleNodes.length - 1 ? currentIndex + 1 : currentIndex;
           const target = visibleNodes[nextIndex];
           if (target) {
@@ -645,7 +658,6 @@
           }
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
-          // 一番上に達している場合はループせず停止
           const prevIndex = currentIndex > 0 ? currentIndex - 1 : 0;
           const target = visibleNodes[prevIndex];
           if (target) {
@@ -738,7 +750,6 @@
       });
     }
 
-    // 上書き確認用の補助関数
     async function confirmOverwrite(filename, state) {
       if (state.applyAll) return state.action;
 
@@ -1070,7 +1081,20 @@
     function renderTree() {
       const container = document.getElementById('tree-container');
       container.innerHTML = '';
-      container.appendChild(createTreeDOM(fileTree));
+
+      // メモやフォルダが1つもない場合の案内表示
+      if (!fileTree.children || fileTree.children.length === 0) {
+        const noticeDiv = document.createElement('div');
+        noticeDiv.className = 'tree-empty-notice';
+        noticeDiv.innerHTML = `
+          <p>📝 メモがありません</p>
+          上部の「📁+ フォルダ」や「📄+ メモ」ボタンから、新しい項目を作成してみましょう。
+        `;
+        container.appendChild(noticeDiv);
+      } else {
+        container.appendChild(createTreeDOM(fileTree));
+      }
+
       saveTreeToStorage();
     }
 
@@ -1261,6 +1285,7 @@
       
       const textarea = document.getElementById('memo');
       textarea.disabled = false;
+      textarea.placeholder = "メモの内容を入力...";
       textarea.value = node.content || '';
       document.getElementById('current-path').textContent = getNodePath(fileTree, node.id);
 
@@ -1322,10 +1347,7 @@
         if (recentTabs.length > 0) {
           openFile(recentTabs[0].id);
         } else {
-          activeTabId = null;
-          document.getElementById('memo').disabled = true;
-          document.getElementById('memo').value = '';
-          document.getElementById('current-path').textContent = '項目を選択してください';
+          clearEditor();
           renderTabs();
         }
       } else {
