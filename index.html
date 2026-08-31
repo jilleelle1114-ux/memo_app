@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO関連メタタグ -->
-  <title>無料の多機能ツリーメモ帳｜ブラウザで動くローカル同期対応Webアプリ</title>
-  <meta name="description" content="登録不要・完全無料で使えるブラウザ完結型の多機能ツリー構造メモアプリ。フォルダ階層管理、タブ表示、全メモリアルタイム検索、ローカルフォルダへの一括保存（FileSystem Access API）に対応。アウトライナーや思考整理に最適です。">
-  <meta name="keywords" content="ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ,フォルダ管理,思考整理ツール">
+  <title>TreeMo (ツリーモ) | 階層型ツリーメモ・ノートアプリ</title>
+  <!-- ファビコン設定 (SVG) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3CSVG%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3Cdefs%3E%3ClinearGradient%20id='appModernGreen'%20x1='0%25'%20y1='0%25'%20x2='100%25'%20y2='100%25'%3E%3Cstop%20offset='0%25'%20stop-color='%2310b981'/%3E%3Cstop%20offset='100%25'%20stop-color='%23047857'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x='4'%20y='4'%20width='40'%20height='40'%20rx='10'%20fill='url(%23appModernGreen)'/%3E%3Cpath%20d='M16%2023%20V33%20C16%2034.5%2017.5%2035%2020%2035%20H24'%20stroke='%23ffffff'%20stroke-width='2.2'%20stroke-linecap='round'%20fill='none'%20opacity='0.8'/%3E%3Crect%20x='12'%20y='12'%20width='10'%20height='10'%20rx='2.5'%20fill='%23ffffff'/%3E%3Crect%20x='25'%20y='18'%20width='9'%20height='9'%20rx='2'%20fill='%23a7f3d0'/%3E%3Crect%20x='25'%20y='30'%20width='9'%20height='9'%20rx='2'%20fill='%23fef08a'/%3E%3C/svg%3E">
+  <meta name="description" content="登録不要・完全無料で使えるブラウザ完結型の階層型ツリーメモ帳「TreeMo（ツリーモ）」。フォルダ階層管理、タブ表示、全メモリアルタイム検索、ローカルフォルダ一括同期（FileSystem Access API）に対応。アウトライナーや思考整理に最適です。">
+  <meta name="keywords" content="TreeMo,ツリーモ,ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ,フォルダ管理,思考整理ツール">
   
   <!-- OGP（SNS・検索共有用） -->
-  <meta property="og:title" content="無料の多機能ツリーメモ帳｜ブラウザで動くローカル同期対応Webアプリ">
+  <meta property="og:title" content="TreeMo (ツリーモ) | 階層型ツリーメモ・ノートアプリ">
   <meta property="og:description" content="登録不要ですぐに使える高機能ツリー構造メモ。ローカルフォルダ一括同期＆全メモ検索対応。">
   <meta property="og:type" content="website">
 
@@ -21,6 +23,9 @@
       --bg-color: #f8f9fa;
       --text-color: #333333;
       --border-color: #e0e0e0;
+      --warning-bg: #fff3cd;
+      --warning-border: #ffeeba;
+      --warning-text: #856404;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,10 +54,13 @@
       align-items: center;
     }
     .logo {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       color: var(--primary-color);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* ヒーローセクション */
@@ -112,7 +120,29 @@
       color: #1a1a1a;
     }
 
-    /* 特長グリッド（最初の元のサイズに戻しています） */
+    /* 注意事項ボックス */
+    .notice-box {
+      background-color: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 24px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+    }
+    .notice-box h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .notice-box ul {
+      margin-left: 20px;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* 特長グリッド */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -133,7 +163,7 @@
       font-size: 20px;
       margin-bottom: 10px;
       color: #1a1a1a;
-      word-break: keep-all; /* 単語の途中で改行されるのを自然に防ぎます */
+      word-break: keep-all;
     }
     .feature-card p {
       font-size: 14px;
@@ -199,6 +229,7 @@
     .faq-answer {
       font-size: 14px;
       color: #555;
+      line-height: 1.7;
     }
 
     /* フッターCTA */
@@ -229,7 +260,34 @@
 
   <header>
     <div class="header-container">
-      <a href="#" class="logo">📂 多機能ツリーメモ</a>
+      <a href="#" class="logo" style="display: flex; align-items: center; text-decoration: none;">
+		  <svg width="240" height="48" viewBox="0 0 240 48" xmlns="http://www.w3.org/2000/svg">
+		    <defs>
+		      <!-- 白背景でも緑背景でも映えるグラデーション -->
+		      <linearGradient id="appModernGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+		        <stop offset="0%" stop-color="#10b981"/>
+		        <stop offset="100%" stop-color="#047857"/>
+		      </linearGradient>
+		    </defs>
+
+		    <!-- 拡大したベース背景パネル -->
+		    <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#appModernGreen)"/>
+
+		    <!-- ノード接続ライン -->
+		    <path d="M16 23 V33 C16 34.5 17.5 35 20 35 H24" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.8"/>
+
+		    <!-- 各ノード -->
+		    <rect x="12" y="12" width="10" height="10" rx="2.5" fill="#ffffff"/>
+		    <rect x="25" y="18" width="9" height="9" rx="2" fill="#a7f3d0"/>
+		    <rect x="25" y="30" width="9" height="9" rx="2" fill="#fef08a"/>
+
+		    <!-- テキスト（文字サイズを26pxに拡大・位置調整） -->
+		    <text x="58" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5">
+		      <tspan fill="#064e3b">Tree</tspan><tspan fill="#10b981">Mo</tspan>
+		    </text>
+		  </svg>
+		</a>
+
       <a href="app.html" class="btn-launch" style="padding: 8px 16px; font-size: 14px;">アプリを起動する</a>
     </div>
   </header>
@@ -238,16 +296,16 @@
     <!-- ヒーローセクション -->
     <section class="hero">
       <div class="hero-container">
-        <h1>思考をクリアに整理する<br>ブラウザ完結型ツリーメモ帳</h1>
-        <p>会員登録不要・完全無料。フォルダによる階層管理と強力な横断検索、PCローカルフォルダへの<br>一括自動同期を備えたシンプルなメモツールです。</p>
-        <a href="app.html" class="btn-launch">今すぐアプリを使う（登録不要）</a>
+        <h1>思考をクリアに整理する<br>階層型ツリーメモアプリ「TreeMo」</h1>
+        <p>会員登録不要・完全無料。フォルダによる階層管理と強力な横断検索、PCローカルフォルダへの一括自動同期を備えたモダンなメモツールです。</p>
+        <a href="app.html" class="btn-launch">今すぐTreeMoを使う（登録不要）</a>
         <p class="hero-subtext">※インストール不要・ブラウザ上ですぐに起動します</p>
       </div>
     </section>
 
     <!-- 主な機能・特長 -->
     <section id="features">
-      <h2 class="section-title">アプリの主な機能と特長</h2>
+      <h2 class="section-title">TreeMo の主な機能と特長</h2>
       <div class="features-grid">
         
         <article class="feature-card">
@@ -324,6 +382,19 @@
     <!-- よくある質問 (FAQ) -->
     <section id="faq">
       <h2 class="section-title">よくある質問 (FAQ)</h2>
+      
+      <!-- データ削除の注意喚起領域 -->
+      <div class="notice-box">
+        <h3>⚠️ データの保存とブラウザ履歴・Cookie削除に関する注意点</h3>
+        <p>TreeMoはサーバーを使用せず、入力されたメモをブラウザ内部の記憶領域（<strong>LocalStorage</strong>）に保存します。そのため、ブラウザの「閲覧履歴・データ削除」を行う際に以下の項目を消去すると、<strong>作成したメモデータが消失します</strong>。</p>
+        <ul style="margin-top: 10px;">
+          <li><strong>Cookie と他のサイトデータ</strong> (Cookie and other site data)</li>
+          <li><strong>サイトの設定・オフラインデータ</strong> (Site settings / Offline data)</li>
+          <li><strong>すべての閲覧履歴・データを削除（全期間）</strong></li>
+        </ul>
+        <p style="margin-top: 10px; font-weight: bold;">※対策：大切なデータは定期的に「ローカルフォルダ同期機能」を使ってPC上のフォルダにバックアップ保存することを強く推奨します。</p>
+      </div>
+
       <div class="faq-list">
         
         <div class="faq-item">
@@ -334,6 +405,14 @@
         <div class="faq-item">
           <div class="faq-question">Q. 入力したメモデータが外部に流出する心配はありますか？</div>
           <div class="faq-answer">A. データはすべてお客様のお使いのブラウザ内部または指定したローカルフォルダにのみ保存されます。外部のサーバーへ送信されることは一切ありません。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Q. ブラウザの履歴クリアやキャッシュ削除でメモは消えますか？</div>
+          <div class="faq-answer">
+            A. <strong>「Cookieとサイトデータ」をクリアするとメモが消去されます。</strong><br>
+            通常の「閲覧履歴」や「キャッシュされた画像とファイル」のみの削除であればデータは維持されますが、誤って消去してしまうリスクを防ぐため、PCローカルフォルダへの定期的な同期・出力を行ってください。
+          </div>
         </div>
 
         <div class="faq-item">
@@ -348,12 +427,12 @@
     <div class="cta-section">
       <h2 style="margin-bottom: 16px;">さっそくメモを作成してみましょう</h2>
       <p style="margin-bottom: 24px; color: #666;">登録不要で、今すぐブラウザ上でお使いいただけます。</p>
-      <a href="app.html" class="btn-launch">多機能ツリーメモアプリを開く</a>
+      <a href="app.html" class="btn-launch">TreeMo を開く</a>
     </div>
   </main>
 
   <footer>
-    <p>&copy; 多機能ツリーメモ帳 All Rights Reserved.</p>
+    <p>&copy; TreeMo All Rights Reserved.</p>
   </footer>
 
 </body>
