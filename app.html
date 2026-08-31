@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- ファビコン設定 (SVG) -->
   <title>TreeMo (ツリーモ) | 階層型ツリーメモ・ノートアプリ</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhcHBNb2Rlcm5HcmVlbiIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA0NzgnNTciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIxMCIgZmlsbD0idXJsKCNhcHBNb2Rlcm5HcmVlbikiLz48cGF0aCBkPSJNMTYgMjMgVjMzIEMxNiAzNC41IDE3LjUgMzUgMjAgMzUgSDI0IiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuOCIvPjxyZWN0IHg9IjEyIiB5PSIxMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjZmZmZmZmIi8+PHJlY3QgeD0iMjUiIHk9IjE4IiB3aWR0aD0iOSIgaGVpZ2h0PSI5IiByeD0iMiIgZmlsbD0iI2E3ZjNkMCIvPjxyZWN0IHg9IjI1IiB5PSIzMCIgd2lkdGg9IjkiIGhlaWdodD0iOSIgcng9IjIiIGZpbGw9IiNmZWYwOGEiLz48L3N2Zz4=">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23059669%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2310b981%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23ecfdf5%22%2F%3E%3Cg%20transform%3D%22scale(1.15)%20translate(-2.6%2C%20-2.6)%22%3E%3Cpath%20d%3D%22M20%2032%20V11%20M20%2017%20L28%2010%20M20%2023%20L12%2016%20M20%2024%20L27%2018%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%227.5%22%20r%3D%223%22%20fill%3D%22%2310b981%22%2F%3E%3Ccircle%20cx%3D%2229.5%22%20cy%3D%229%22%20r%3D%222.5%22%20fill%3D%22%2334d399%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 
   <!-- Google AdSense スクリプト (承認後にコメントアウトを解除) -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
@@ -17,14 +17,14 @@
       display: flex;
       height: 100vh;
       overflow: hidden;
-      background: #f8f9fa;
-      color: #333;
+      background: #f0fdf4;
+      color: #1f2937; /* 基本テキストカラーを黒（ダークグレー）に変更 */
     }
 
     #sidebar {
       width: 320px;
       background: #ffffff;
-      border-right: 1px solid #e0e0e0;
+      border-right: 1px solid #a7f3d0;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -32,11 +32,12 @@
 
     .brand-header {
       padding: 12px 16px;
-      background: #047857; /* 緑ベースに変更 */
+      background: #064e3b; /* エメラルドダークグリーン */
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 2px solid #059669;
     }
     .brand-title {
       font-size: 18px;
@@ -47,10 +48,15 @@
       gap: 8px;
     }
 
+    /* ロゴの視認性を高めるドロップシャドウ */
+    .logo-text {
+      filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4));
+    }
+
     .sidebar-header {
       padding: 12px;
-      border-bottom: 1px solid #e0e0e0;
-      background: #f1f3f5;
+      border-bottom: 1px solid #d1fae5;
+      background: #ecfdf5;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -59,23 +65,25 @@
     .btn {
       padding: 6px 10px;
       font-size: 12px;
-      font-weight: bold;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+      font-weight: 600;
+      border: 1px solid #a7f3d0;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #1f2937;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
+      transition: all 0.15s ease;
     }
-    .btn:hover { background: #e9ecef; }
+    .btn:hover { background: #d1fae5; border-color: #34d399; }
     .btn-primary { background: #059669; color: white; border: none; }
     .btn-primary:hover { background: #047857; }
-    .btn-import { background: #0d9488; color: white; border: none; }
-    .btn-import:hover { background: #0f766e; }
-    .btn-sync { background: #16a34a; color: white; border: none; }
-    .btn-sync:hover { background: #15803d; }
+    .btn-import { background: #064e3b; color: white; border: none; }
+    .btn-import:hover { background: #022c22; }
+    .btn-sync { background: #0284c7; color: white; border: none; }
+    .btn-sync:hover { background: #0369a1; }
     .btn-warning { background: #f59e0b; color: #ffffff; border: none; }
     .btn-warning:hover { background: #d97706; }
 
@@ -91,32 +99,32 @@
       font-size: 14px;
       outline: none;
     }
-    #tree-container:focus { box-shadow: inset 0 0 0 2px #059669; }
+    #tree-container:focus { box-shadow: inset 0 0 0 2px #10b981; }
 
     .tree-empty-notice {
       padding: 16px;
-      color: #6c757d;
+      color: #4b5563;
       font-size: 13px;
       line-height: 1.6;
       text-align: center;
-      background: #f8f9fa;
-      border: 1px dashed #ced4da;
-      border-radius: 6px;
+      background: #ecfdf5;
+      border: 1px dashed #6ee7b7;
+      border-radius: 8px;
       margin: 12px 8px;
     }
     .tree-empty-notice p {
       margin-bottom: 8px;
       font-weight: bold;
-      color: #495057;
+      color: #1f2937;
     }
 
-    /* 広告枠スタイル (左下エリアの余白を調整) */
+    /* 広告枠スタイル */
     .ad-sidebar {
       padding: 8px;
-      border-top: 1px solid #e0e0e0;
-      background: #fafafa;
+      border-top: 1px solid #a7f3d0;
+      background: #ecfdf5;
       text-align: center;
-      min-height: 120px; /* 250pxから120pxへコンパクト化 */
+      min-height: 120px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -127,8 +135,9 @@
     .ad-editor-bottom {
       margin-top: 12px;
       padding: 8px;
-      background: #fafafa;
-      border: 1px dashed #ddd;
+      background: #f0fdf4;
+      border: 1px dashed #a7f3d0;
+      border-radius: 6px;
       text-align: center;
       min-height: 90px;
       flex-shrink: 0;
@@ -139,7 +148,7 @@
 
     .ad-label {
       font-size: 10px;
-      color: #999;
+      color: #059669;
       margin-bottom: 4px;
       display: block;
     }
@@ -150,21 +159,23 @@
     .tree-node {
       display: flex;
       align-items: center;
-      padding: 4px 6px;
-      border-radius: 4px;
+      padding: 5px 8px;
+      border-radius: 6px;
       cursor: pointer;
       user-select: none;
       margin: 2px 0;
       border: 1px solid transparent;
+      color: #1f2937; /* ツリー内のファイル・フォルダ文字色を黒に指定 */
+      transition: background-color 0.1s ease;
     }
-    .tree-node:hover { background: #e9ecef; }
-    .tree-node.focused { border-color: #059669; background: #ecfdf5; }
-    .tree-node.selected { background: #059669; color: white; }
-    .tree-node.cut { opacity: 0.5; border: 1px dashed #999; }
+    .tree-node:hover { background: #e6f4ea; }
+    .tree-node.focused { border-color: #10b981; background: #d1fae5; color: #1f2937; }
+    .tree-node.selected { background: #10b981; color: #ffffff; } /* 選択時のみ白文字 */
+    .tree-node.cut { opacity: 0.5; border: 1px dashed #059669; }
     .tree-node.drag-over {
-      background-color: #d1fae5 !important;
-      border: 1px dashed #059669 !important;
-      color: #000 !important;
+      background-color: #a7f3d0 !important;
+      border: 1px dashed #047857 !important;
+      color: #0f172a !important;
     }
     .tree-toggle {
       display: inline-block;
@@ -174,10 +185,10 @@
       text-align: center;
       font-size: 10px;
       margin-right: 4px;
-      color: #666;
+      color: #4b5563;
       cursor: pointer;
     }
-    .tree-node.selected .tree-toggle { color: #fff; }
+    .tree-node.selected .tree-toggle { color: #ffffff; }
     .tree-icon { margin-right: 6px; }
 
     #main-content {
@@ -190,41 +201,45 @@
 
     #tab-bar {
       display: flex;
-      background: #e9ecef;
-      border-bottom: 1px solid #ced4da;
+      background: #ecfdf5;
+      border-bottom: 1px solid #a7f3d0;
       overflow-x: auto;
       overflow-y: hidden;
-      padding: 4px 4px 0 4px;
+      padding: 6px 6px 0 6px;
       gap: 4px;
       scrollbar-width: thin;
     }
     #tab-bar::-webkit-scrollbar { height: 4px; }
-    #tab-bar::-webkit-scrollbar-thumb { background: #bbb; border-radius: 2px; }
+    #tab-bar::-webkit-scrollbar-thumb { background: #a7f3d0; border-radius: 2px; }
 
     .tab {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 10px;
+      padding: 7px 12px;
       font-size: 13px;
-      background: #dee2e6;
-      border: 1px solid #ced4da;
+      background: #d1fae5;
+      color: #374151; /* タブの文字色を黒系に指定 */
+      border: 1px solid #a7f3d0;
       border-bottom: none;
-      border-radius: 6px 6px 0 0;
+      border-radius: 8px 8px 0 0;
       cursor: pointer;
       user-select: none;
       width: 180px;
       min-width: 100px;
       flex-shrink: 0;
-      transition: background 0.1s;
+      transition: all 0.15s ease;
     }
+    .tab:hover { background: #e6f4ea; }
     .tab.active {
       background: #ffffff;
-      font-weight: bold;
+      color: #0f172a; /* アクティブタブの文字色をはっきりした黒に指定 */
+      font-weight: 600;
+      border-color: #a7f3d0;
       border-bottom: 1px solid #ffffff;
       margin-bottom: -1px;
     }
-    .tab.tab-drag-over { border-left: 3px solid #059669; }
+    .tab.tab-drag-over { border-left: 3px solid #10b981; }
     
     .tab-title {
       flex: 1;
@@ -235,30 +250,31 @@
 
     .tab-close {
       font-size: 12px;
-      color: #888;
+      color: #6b7280;
       border-radius: 50%;
       padding: 0 4px;
       flex-shrink: 0;
     }
-    .tab-close:hover { background: #ccc; color: #000; }
+    .tab-close:hover { background: #a7f3d0; color: #0f172a; }
 
     .editor-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 16px;
+      padding: 20px;
       overflow: hidden;
+      background: #ffffff;
     }
 
     .main-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       flex-shrink: 0;
     }
 
-    #current-path { font-size: 14px; font-weight: bold; color: #495057; }
+    #current-path { font-size: 14px; font-weight: 600; color: #1f2937; } /* パス表記も黒字に変更 */
 
     textarea {
       flex: 1;
@@ -266,15 +282,19 @@
       padding: 16px;
       font-size: 15px;
       line-height: 1.6;
-      border: 1px solid #ced4da;
-      border-radius: 6px;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
       resize: none;
       outline: none;
       overflow-y: auto;
+      color: #0f172a; /* エディタ内テキストを完全な黒（濃い紺黒）に変更 */
+      background: #ffffff;
+      transition: border-color 0.15s ease;
     }
-    textarea:focus { border-color: #059669; }
+    textarea:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
     textarea:disabled {
-      background-color: #f8f9fa;
+      background-color: #f8fafc;
+      color: #9ca3af;
       cursor: not-allowed;
     }
 
@@ -283,7 +303,7 @@
     #search-panel {
       width: 320px;
       background: #ffffff;
-      border-left: 1px solid #e0e0e0;
+      border-left: 1px solid #a7f3d0;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -293,26 +313,26 @@
     #search-panel.hidden { display: none; }
 
     .search-panel-header {
-      padding: 12px;
-      border-bottom: 1px solid #e0e0e0;
-      background: #f1f3f5;
+      padding: 14px;
+      border-bottom: 1px solid #a7f3d0;
+      background: #ecfdf5;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .search-panel-header h3 { font-size: 14px; color: #333; }
+    .search-panel-header h3 { font-size: 14px; color: #1f2937; font-weight: 600; }
 
     .btn-close-panel {
       background: transparent;
       border: none;
       font-size: 18px;
       cursor: pointer;
-      color: #666;
+      color: #4b5563;
       padding: 0 4px;
       line-height: 1;
     }
-    .btn-close-panel:hover { color: #000; }
+    .btn-close-panel:hover { color: #0f172a; }
 
     .search-panel-body {
       padding: 12px;
@@ -325,13 +345,15 @@
 
     .search-box {
       width: 100%;
-      padding: 8px 10px;
+      padding: 8px 12px;
       font-size: 13px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
+      color: #0f172a;
+      border: 1px solid #a7f3d0;
+      border-radius: 6px;
       outline: none;
+      transition: border-color 0.15s ease;
     }
-    .search-box:focus { border-color: #059669; }
+    .search-box:focus { border-color: #10b981; }
 
     #search-results-list {
       flex: 1;
@@ -342,8 +364,8 @@
     }
 
     .search-file-group {
-      border: 1px solid #e9ecef;
-      border-radius: 4px;
+      border: 1px solid #a7f3d0;
+      border-radius: 6px;
       overflow: hidden;
     }
 
@@ -352,7 +374,7 @@
       padding: 6px 10px;
       font-size: 12px;
       font-weight: bold;
-      color: #047857;
+      color: #1f2937;
       border-bottom: 1px solid #a7f3d0;
       white-space: nowrap;
       overflow: hidden;
@@ -363,11 +385,11 @@
       padding: 6px 10px;
       font-size: 12px;
       cursor: pointer;
-      border-bottom: 1px solid #f8f9fa;
+      border-bottom: 1px solid #f1f5f9;
       background: #fff;
     }
     .search-hit-item:last-child { border-bottom: none; }
-    .search-hit-item:hover { background: #f1f3f5; }
+    .search-hit-item:hover { background: #f0fdf4; }
 
     .search-hit-line {
       font-size: 11px;
@@ -377,12 +399,13 @@
     }
 
     .search-hit-snippet {
-      color: #495057;
+      color: #374151; /* 検索スニペットも黒字に変更 */
       word-break: break-all;
     }
 
     .search-highlight-text {
       background-color: #fef08a;
+      color: #000000;
       font-weight: bold;
       border-radius: 2px;
     }
@@ -391,7 +414,8 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(2px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -403,13 +427,13 @@
       background: #ffffff;
       width: 520px;
       max-width: 90%;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       overflow: hidden;
     }
     .modal-header {
-      padding: 14px 16px;
-      background: #dc3545;
+      padding: 14px 18px;
+      background: #ef4444;
       color: white;
       font-weight: bold;
       display: flex;
@@ -417,14 +441,14 @@
       align-items: center;
     }
     .modal-body {
-      padding: 16px;
+      padding: 20px;
       font-size: 13px;
       line-height: 1.6;
-      color: #333;
+      color: #334155;
     }
     .modal-body h4 {
       margin-bottom: 8px;
-      color: #dc3545;
+      color: #dc2626;
     }
     .modal-body ul {
       margin: 8px 0 12px 20px;
@@ -433,9 +457,9 @@
       margin-bottom: 4px;
     }
     .modal-footer {
-      padding: 12px 16px;
-      background: #f8f9fa;
-      border-top: 1px solid #e0e0e0;
+      padding: 12px 18px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
       text-align: right;
     }
   </style>
@@ -445,34 +469,36 @@
   <div id="sidebar">
     <div class="brand-header">
       <div class="brand-title">
-        <a href="#" class="logo" style="display: flex; align-items: center; text-decoration: none;">
-          <svg width="200" height="40" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <!-- 白背景でも緑背景でも映えるグラデーション -->
-              <linearGradient id="appModernGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#10b981"/>
-                <stop offset="100%" stop-color="#047857"/>
-              </linearGradient>
-            </defs>
+		<a href="#" class="logo" style="display: flex; align-items: center; text-decoration: none;">
+		  <svg width="240" height="48" viewBox="0 0 240 48" xmlns="http://www.w3.org/2000/svg">
+		    <defs>
+		      <linearGradient id="mGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+		        <stop offset="0%" stop-color="#10b981"/>
+		        <stop offset="100%" stop-color="#34d399"/>
+		      </linearGradient>
+		      <!-- 文字背景用の影フィルタ -->
+		      <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+		        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.6"/>
+		      </filter>
+		    </defs>
+		    
+		    <!-- アイコン: 幾何学ツリー -->
+		    <g transform="translate(6, 4)">
+		      <circle cx="20" cy="20" r="19" fill="#ecfdf5"/>
+		      <path d="M20 31 V12 M20 18 L27 12 M20 23 L13 17 M20 24 L26 19" stroke="url(#mGrad1)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+		      <circle cx="20" cy="9" r="2.5" fill="#10b981"/>
+		      <circle cx="28" cy="11" r="2" fill="#34d399"/>
+		    </g>
 
-            <!-- 白・緑両対応のベース背景パネル -->
-            <rect x="2" y="2" width="36" height="36" rx="10" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-            <rect x="4" y="4" width="32" height="32" rx="8" fill="url(#appModernGreen)"/>
-
-            <!-- ノード接続ライン -->
-            <path d="M14 19 V27 C14 28.5 15 29 17 29 H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
-
-            <!-- 各ノード -->
-            <rect x="11" y="10" width="8" height="8" rx="2" fill="#ffffff"/>
-            <rect x="21" y="15" width="7" height="7" rx="1.5" fill="#a7f3d0"/>
-            <rect x="21" y="25" width="7" height="7" rx="1.5" fill="#fef08a"/>
-
-            <!-- 視認性を高めたテキストデザイン -->
-			<text x="48" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#ffffff" style="filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.4));">
-			  TreeMo
-			</text>
-          </svg>
-        </a>
+		    <!-- テキスト: ロゴ -->
+		    <g filter="url(#dropShadow)" class="logo-text">
+		      <text x="56" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="700" letter-spacing="-0.5">
+		        <tspan fill="#f0fdf4" font-size="25">Tree</tspan>
+		        <tspan fill="#34d399" font-size="25" font-weight="800">Mo</tspan>
+		      </text>
+		    </g>
+		  </svg>
+		</a>
       </div>
     </div>
 
@@ -496,13 +522,13 @@
         <button class="btn" onclick="copySelectedItems()">📋 コピー</button>
         <button class="btn" onclick="cutSelectedItems()">✂️ 切り取り</button>
         <button class="btn" onclick="pasteItems()">📥 貼り付け</button>
-        <button class="btn" onclick="deleteSelectedItems()" style="color:red;">🗑️ 削除</button>
+        <button class="btn" onclick="deleteSelectedItems()" style="color:#ef4444;">🗑️ 削除</button>
       </div>
     </div>
 
     <div id="tree-container" tabindex="0"></div>
 
-    <!-- 1. サイドバー下部 広告スペース（高さを最適化） -->
+    <!-- 1. サイドバー下部 広告スペース -->
     <div class="ad-sidebar">
       <span class="ad-label">スポンサーリンク</span>
       <!-- AdSense タグ例 -->
@@ -1673,7 +1699,7 @@
       searchNode(fileTree);
 
       if (hitsByFile.size === 0) {
-        resultsContainer.innerHTML = '<div style="color: #888; padding: 8px; font-size: 13px;">該当する項目が見つかりません</div>';
+        resultsContainer.innerHTML = '<div style="color: #4b5563; padding: 8px; font-size: 13px;">該当する項目が見つかりません</div>';
         return;
       }
 

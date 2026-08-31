@@ -7,7 +7,7 @@
   <!-- SEO関連メタタグ -->
   <title>TreeMo (ツリーモ) | 階層型ツリーメモ・ノートアプリ</title>
   <!-- ファビコン設定 (SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhcHBNb2Rlcm5HcmVlbiIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA0NzgnNTciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIxMCIgZmlsbD0idXJsKCNhcHBNb2Rlcm5HcmVlbikiLz48cGF0aCBkPSJNMTYgMjMgVjMzIEMxNiAzNC41IDE3LjUgMzUgMjAgMzUgSDI0IiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuOCIvPjxyZWN0IHg9IjEyIiB5PSIxMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjZmZmZmZmIi8+PHJlY3QgeD0iMjUiIHk9IjE4IiB3aWR0aD0iOSIgaGVpZ2h0PSI5IiByeD0iMiIgZmlsbD0iI2E3ZjNkMCIvPjxyZWN0IHg9IjI1IiB5PSIzMCIgd2lkdGg9IjkiIGhlaWdodD0iOSIgcng9IjIiIGZpbGw9IiNmZWYwOGEiLz48L3N2Zz4=">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23059669%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2310b981%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23f0fdf4%22%2F%3E%3Cg%20transform%3D%22scale(1.15)%20translate(-2.6%2C%20-2.6)%22%3E%3Cpath%20d%3D%22M20%2032%20V11%20M20%2017%20L28%2010%20M20%2023%20L12%2016%20M20%2024%20L27%2018%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%227.5%22%20r%3D%223%22%20fill%3D%22%2310b981%22%2F%3E%3Ccircle%20cx%3D%2229.5%22%20cy%3D%229%22%20r%3D%222.5%22%20fill%3D%22%2334d399%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
   <meta name="description" content="登録不要・完全無料で使えるブラウザ完結型の階層型ツリーメモ帳「TreeMo（ツリーモ）」。フォルダ階層管理、タブ表示、全メモリアルタイム検索、ローカルフォルダ一括同期（FileSystem Access API）に対応。アウトライナーや思考整理に最適です。">
   <meta name="keywords" content="TreeMo,ツリーモ,ツリーメモ,Webメモ帳,無料メモアプリ,アウトライナー,ローカル保存,ブラウザメモ,フォルダ管理,思考整理ツール">
   
@@ -18,14 +18,14 @@
 
   <style>
     :root {
-      --primary-color: #007bff;
-      --primary-hover: #0056b3;
-      --bg-color: #f8f9fa;
-      --text-color: #333333;
-      --border-color: #e0e0e0;
-      --warning-bg: #fff3cd;
-      --warning-border: #ffeeba;
-      --warning-text: #856404;
+      --primary-color: #059669;
+      --primary-hover: #047857;
+      --bg-color: #f0fdf4;
+      --text-color: #1f2937;
+      --border-color: #a7f3d0;
+      --warning-bg: #fef3c7;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,9 +65,10 @@
 
     /* ヒーローセクション */
     .hero {
-      background: linear-gradient(135deg, #e7f3ff 0%, #f8f9fa 100%);
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
       padding: 80px 20px;
       text-align: center;
+      border-bottom: 1px solid var(--border-color);
     }
     .hero-container {
       max-width: 800px;
@@ -76,12 +77,12 @@
     .hero h1 {
       font-size: 36px;
       margin-bottom: 20px;
-      color: #1a1a1a;
+      color: #064e3b;
       line-height: 1.3;
     }
     .hero p {
       font-size: 18px;
-      color: #666;
+      color: #374151;
       margin-bottom: 32px;
     }
     .btn-launch {
@@ -93,18 +94,18 @@
       padding: 16px 40px;
       border-radius: 8px;
       text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
       transition: all 0.2s ease;
     }
     .btn-launch:hover {
       background-color: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
     }
     .hero-subtext {
       margin-top: 12px;
       font-size: 13px;
-      color: #888;
+      color: #059669;
     }
 
     /* セクション共通 */
@@ -117,7 +118,7 @@
       text-align: center;
       font-size: 28px;
       margin-bottom: 40px;
-      color: #1a1a1a;
+      color: #064e3b;
     }
 
     /* 注意事項ボックス */
@@ -135,6 +136,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      color: #b45309;
     }
     .notice-box ul {
       margin-left: 20px;
@@ -153,7 +155,7 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 28px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.05);
     }
     .feature-icon {
       font-size: 32px;
@@ -162,12 +164,12 @@
     .feature-card h3 {
       font-size: 20px;
       margin-bottom: 10px;
-      color: #1a1a1a;
+      color: #064e3b;
       word-break: keep-all;
     }
     .feature-card p {
       font-size: 14px;
-      color: #555;
+      color: #374151;
     }
 
     /* 使い方ステップ */
@@ -183,6 +185,7 @@
       align-items: flex-start;
       gap: 20px;
       background: var(--bg-color);
+      border: 1px solid var(--border-color);
       padding: 20px;
       border-radius: 8px;
     }
@@ -201,10 +204,11 @@
     .step-content h3 {
       font-size: 18px;
       margin-bottom: 6px;
+      color: #064e3b;
     }
     .step-content p {
       font-size: 14px;
-      color: #555;
+      color: #374151;
     }
 
     /* よくある質問 */
@@ -219,6 +223,7 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 20px;
+      background: #ffffff;
     }
     .faq-question {
       font-weight: bold;
@@ -228,7 +233,7 @@
     }
     .faq-answer {
       font-size: 14px;
-      color: #555;
+      color: #374151;
       line-height: 1.7;
     }
 
@@ -240,13 +245,17 @@
       margin-top: 40px;
       border-top: 1px solid var(--border-color);
     }
+    .cta-section h2 {
+      color: #064e3b;
+    }
 
     footer {
       text-align: center;
       padding: 20px;
       font-size: 13px;
-      color: #888;
+      color: #059669;
       border-top: 1px solid var(--border-color);
+      background: #ffffff;
     }
 
     @media (max-width: 768px) {
@@ -261,32 +270,30 @@
   <header>
     <div class="header-container">
       <a href="#" class="logo" style="display: flex; align-items: center; text-decoration: none;">
-		  <svg width="240" height="48" viewBox="0 0 240 48" xmlns="http://www.w3.org/2000/svg">
-		    <defs>
-		      <!-- 白背景でも緑背景でも映えるグラデーション -->
-		      <linearGradient id="appModernGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-		        <stop offset="0%" stop-color="#10b981"/>
-		        <stop offset="100%" stop-color="#047857"/>
-		      </linearGradient>
-		    </defs>
+        <svg width="270" height="54" viewBox="0 0 270 54" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#059669"/>
+              <stop offset="100%" stop-color="#10b981"/>
+            </linearGradient>
+          </defs>
+          
+          <!-- アイコン: 幾何学ツリー（拡大＆中央配置調整） -->
+          <g transform="translate(6, 4) scale(1.15)">
+            <circle cx="20" cy="20" r="19" fill="#f0fdf4"/>
+            <!-- 木の幹と枝葉の抽象ライン -->
+            <path d="M20 31 V12 M20 18 L27 12 M20 23 L13 17 M20 24 L26 19" stroke="url(#mGrad1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="20" cy="9" r="2.5" fill="#10b981"/>
+            <circle cx="28" cy="11" r="2" fill="#34d399"/>
+          </g>
 
-		    <!-- 拡大したベース背景パネル -->
-		    <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#appModernGreen)"/>
-
-		    <!-- ノード接続ライン -->
-		    <path d="M16 23 V33 C16 34.5 17.5 35 20 35 H24" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.8"/>
-
-		    <!-- 各ノード -->
-		    <rect x="12" y="12" width="10" height="10" rx="2.5" fill="#ffffff"/>
-		    <rect x="25" y="18" width="9" height="9" rx="2" fill="#a7f3d0"/>
-		    <rect x="25" y="30" width="9" height="9" rx="2" fill="#fef08a"/>
-
-		    <!-- テキスト（文字サイズを26pxに拡大・位置調整） -->
-		    <text x="58" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5">
-		      <tspan fill="#064e3b">Tree</tspan><tspan fill="#10b981">Mo</tspan>
-		    </text>
-		  </svg>
-		</a>
+          <!-- テキスト（案3のフォント・28pxに拡大） -->
+          <text x="64" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="700" letter-spacing="-0.5">
+            <tspan fill="#064e3b" font-size="28">Tree</tspan>
+            <tspan fill="#10b981" font-size="28" font-weight="800">Mo</tspan>
+          </text>
+        </svg>
+      </a>
 
       <a href="app.html" class="btn-launch" style="padding: 8px 16px; font-size: 14px;">アプリを起動する</a>
     </div>
@@ -426,7 +433,7 @@
     <!-- 下部CTA -->
     <div class="cta-section">
       <h2 style="margin-bottom: 16px;">さっそくメモを作成してみましょう</h2>
-      <p style="margin-bottom: 24px; color: #666;">登録不要で、今すぐブラウザ上でお使いいただけます。</p>
+      <p style="margin-bottom: 24px; color: #059669;">登録不要で、今すぐブラウザ上でお使いいただけます。</p>
       <a href="app.html" class="btn-launch">TreeMo を開く</a>
     </div>
   </main>
