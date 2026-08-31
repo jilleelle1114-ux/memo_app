@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23059669%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2310b981%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23f0fdf4%22%2F%3E%3Cg%20transform%3D%22scale(1.15)%20translate(-2.6%2C%20-2.6)%22%3E%3Cpath%20d%3D%22M20%2032%20V11%20M20%2017%20L28%2010%20M20%2023%20L12%2016%20M20%2024%20L27%2018%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%227.5%22%20r%3D%223%22%20fill%3D%22%2310b981%22%2F%3E%3Ccircle%20cx%3D%2229.5%22%20cy%3D%229%22%20r%3D%222.5%22%20fill%3D%22%2334d399%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+  <title>TreeMo 使い方ガイド</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f0fdf4;
+      color: #1f2937;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid #a7f3d0;
+    }
+    header {
+      border-bottom: 2px solid #059669;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      color: #064e3b;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h2 {
+      color: #059669;
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #d1fae5;
+    }
+    p { margin-bottom: 12px; font-size: 14px; }
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    li { margin-bottom: 6px; }
+    .shortcut-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    .shortcut-table th, .shortcut-table td {
+      border: 1px solid #a7f3d0;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .shortcut-table th {
+      background: #ecfdf5;
+      color: #064e3b;
+    }
+    kbd {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .warning-box {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+      color: #991b1b;
+      font-size: 13px;
+    }
+    .warning-box h3 { margin-bottom: 8px; color: #dc2626; font-size: 15px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1> TreeMo 使い方ガイド</h1>
+      <p>TreeMo（ツリーモ）は、階層構造で直感的にメモやテキストを管理できるツリー型メモ帳アプリです。</p>
+    </header>
+
+    <h2>1. 基本的な操作</h2>
+    <ul>
+      <li><strong>メモ・フォルダの作成：</strong> サイドバー上部の「📁+ フォルダ」「📄+ メモ」ボタンから作成できます。</li>
+      <li><strong>名前の変更・削除：</strong> 項目を選択した状態で「✏️ 名前変更」や「🗑️ 削除」をクリックします。</li>
+      <li><strong>ドラッグ＆ドロップ：</strong> メモやフォルダをドラッグして、別のフォルダへ直感的に移動できます。（<kbd>Ctrl</kbd> キーを押しながらドラッグするとコピーになります）</li>
+    </ul>
+
+    <h2>2. ファイルの読み込みと同期</h2>
+    <ul>
+      <li><strong>ファイル・フォルダ選択：</strong> PC内の `.txt` ファイルやフォルダ構造をそのまま読み込んで読み書きできます。</li>
+      <li><strong>ローカル同期先フォルダを選択：</strong> 同期先フォルダを指定しておくことで、作成したメモ群をまとめてPC上のフォルダへ出力可能です。</li>
+    </ul>
+
+    <h2>3. ショートカットキー一覧</h2>
+    <table class="shortcut-table">
+      <thead>
+        <tr>
+          <th>ショートカット</th>
+          <th>機能</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>F</kbd></td>
+          <td>全メモからのキーワード検索パネルを開く</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+          <td>ローカルフォルダへの一括保存を実行</td>
+        </tr>
+        <tr>
+          <td><kbd>F2</kbd></td>
+          <td>選択中ツリー項目の名前を変更</td>
+        </tr>
+        <tr>
+          <td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td>
+          <td>選択中ツリー項目を削除</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>C</kbd> / <kbd>X</kbd> / <kbd>V</kbd></td>
+          <td>ツリー項目のコピー / 切り取り / 貼り付け</td>
+        </tr>
+        <tr>
+          <td><kbd>↑</kbd> / <kbd>↓</kbd></td>
+          <td>ツリー項目の上下選択移動</td>
+        </tr>
+        <tr>
+          <td><kbd>Esc</kbd></td>
+          <td>検索パネルやモーダルダイアログを閉じる</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <h3>⚠️ データの保存に関する注意点</h3>
+      <p>TreeMo のデータは外部サーバーではなく、お使いの<strong>ブラウザ内（LocalStorage）</strong>に保存されます。</p>
+      <p>ブラウザの閲覧履歴削除などで「Cookieやサイトデータ」を消去するとメモが失われる可能性があります。定期的に右上「💾 ローカルフォルダへ一括保存」でバックアップをとることを推奨します。</p>
+    </div>
+  </div>
+
+</body>
+</html>
