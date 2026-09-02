@@ -3,12 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ファビコン設定 (SVG) -->
   <title>TreeMo (ツリーモ) | 階層型ツリーメモ・ノートアプリ</title>
+  
+  <!-- Web App Manifest (PWA設定) -->
+  <link rel="manifest" id="manifest-placeholder">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TreeMo">
+
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23059669%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2310b981%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23ecfdf5%22%2F%3E%3Cg%20transform%3D%22scale(1.15)%20translate(-2.6%2C%20-2.6)%22%3E%3Cpath%20d%3D%22M20%2032%20V11%20M20%2017%20L28%2010%20M20%2023%20L12%2016%20M20%2024%20L27%2018%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%227.5%22%20r%3D%223%22%20fill%3D%22%2310b981%22%2F%3E%3Ccircle%20cx%3D%2229.5%22%20cy%3D%229%22%20r%3D%222.5%22%20fill%3D%22%2334d399%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 
-  <!-- Google AdSense スクリプト (承認後にコメントアウトを解除) -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <!-- PWA設定動的生成 & Service Worker登録処理 -->
+  <script>
+    // 1. Dynamic Web Manifest Generation
+    const svgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23059669'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='20' fill='%23ecfdf5'/%3E%3Cg transform='scale(1.15) translate(-2.6, -2.6)'%3E%3Cpath d='M20 32 V11 M20 17 L28 10 M20 23 L12 16 M20 24 L27 18' stroke='url(%23g)' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='20' cy='7.5' r='3' fill='%2310b981'/%3E%3Ccircle cx='29.5' cy='9' r='2.5' fill='%2334d399'/%3E%3C/g%3E%3C/svg%3E`;
+
+    const manifestData = {
+      "name": "TreeMo (ツリーモ)",
+      "short_name": "TreeMo",
+      "description": "階層型ツリーメモ・ノートアプリ",
+      "start_url": "./",
+      "display": "standalone",
+      "background_color": "#f0fdf4",
+      "theme_color": "#064e3b",
+      "icons": [
+        {
+          "src": svgIcon,
+          "sizes": "any",
+          "type": "image/svg+xml",
+          "purpose": "any maskable"
+        }
+      ]
+    };
+
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('manifest-placeholder').setAttribute('href', manifestURL);
+    });
+
+    // 2. Dynamic Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swCode = `
+          const CACHE_NAME = 'treemo-cache-v1';
+          self.addEventListener('install', (e) => {
+            self.skipWaiting();
+          });
+          self.addEventListener('activate', (e) => {
+            e.waitUntil(clients.claim());
+          });
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(
+              fetch(e.request).catch(() => caches.match(e.request))
+            );
+          });
+        `;
+        const swBlob = new Blob([swCode], { type: 'text/javascript' });
+        const swURL = URL.createObjectURL(swBlob);
+
+        navigator.serviceWorker.register(swURL)
+          .then(reg => console.log('PWA Service Worker Registered:', reg))
+          .catch(err => console.log('SW Registration failed:', err));
+      });
+    }
+  </script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,7 +78,7 @@
       height: 100vh;
       overflow: hidden;
       background: #f0fdf4;
-      color: #1f2937; /* 基本テキストカラーを黒（ダークグレー）に変更 */
+      color: #1f2937;
     }
 
     #sidebar {
@@ -32,7 +92,7 @@
 
     .brand-header {
       padding: 12px 16px;
-      background: #064e3b; /* エメラルドダークグリーン */
+      background: #064e3b;
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -48,7 +108,6 @@
       gap: 8px;
     }
 
-    /* ロゴの視認性を高めるドロップシャドウ */
     .logo-text {
       filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4));
     }
@@ -77,15 +136,51 @@
       gap: 4px;
       transition: all 0.15s ease;
     }
-    .btn:hover { background: #d1fae5; border-color: #34d399; }
+    .btn:hover:not(:disabled) { background: #d1fae5; border-color: #34d399; }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #e5e7eb !important;
+      border-color: #d1d5db !important;
+      color: #9ca3af !important;
+    }
     .btn-primary { background: #059669; color: white; border: none; }
-    .btn-primary:hover { background: #047857; }
+    .btn-primary:hover:not(:disabled) { background: #047857; }
     .btn-import { background: #064e3b; color: white; border: none; }
-    .btn-import:hover { background: #022c22; }
+    .btn-import:hover:not(:disabled) { background: #022c22; }
     .btn-sync { background: #0284c7; color: white; border: none; }
-    .btn-sync:hover { background: #0369a1; }
+    .btn-sync:hover:not(:disabled) { background: #0369a1; }
+    .btn-sync.connected { background: #059669; color: white; border: none; }
+    .btn-sync.connected:hover:not(:disabled) { background: #047857; }
     .btn-warning { background: #f59e0b; color: #ffffff; border: none; }
-    .btn-warning:hover { background: #d97706; }
+    .btn-warning:hover:not(:disabled) { background: #d97706; }
+
+    /* 同期先状態バッジ */
+    .sync-status-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dir-badge {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      word-break: break-all;
+    }
+    .dir-badge.unconnected {
+      background: #f3f4f6;
+      color: #6b7280;
+      border: 1px solid #e5e7eb;
+    }
+    .dir-badge.connected {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      font-weight: 600;
+    }
 
     .import-bar { display: flex; gap: 4px; }
     .import-bar .btn { flex: 1; }
@@ -118,7 +213,6 @@
       color: #1f2937;
     }
 
-    /* 広告枠スタイル */
     .ad-sidebar {
       padding: 8px;
       border-top: 1px solid #a7f3d0;
@@ -165,12 +259,12 @@
       user-select: none;
       margin: 2px 0;
       border: 1px solid transparent;
-      color: #1f2937; /* ツリー内のファイル・フォルダ文字色を黒に指定 */
+      color: #1f2937;
       transition: background-color 0.1s ease;
     }
     .tree-node:hover { background: #e6f4ea; }
     .tree-node.focused { border-color: #10b981; background: #d1fae5; color: #1f2937; }
-    .tree-node.selected { background: #10b981; color: #ffffff; } /* 選択時のみ白文字 */
+    .tree-node.selected { background: #10b981; color: #ffffff; }
     .tree-node.cut { opacity: 0.5; border: 1px dashed #059669; }
     .tree-node.drag-over {
       background-color: #a7f3d0 !important;
@@ -219,7 +313,7 @@
       padding: 7px 12px;
       font-size: 13px;
       background: #d1fae5;
-      color: #374151; /* タブの文字色を黒系に指定 */
+      color: #374151;
       border: 1px solid #a7f3d0;
       border-bottom: none;
       border-radius: 8px 8px 0 0;
@@ -233,7 +327,7 @@
     .tab:hover { background: #e6f4ea; }
     .tab.active {
       background: #ffffff;
-      color: #0f172a; /* アクティブタブの文字色をはっきりした黒に指定 */
+      color: #0f172a;
       font-weight: 600;
       border-color: #a7f3d0;
       border-bottom: 1px solid #ffffff;
@@ -274,7 +368,7 @@
       flex-shrink: 0;
     }
 
-    #current-path { font-size: 14px; font-weight: 600; color: #1f2937; } /* パス表記も黒字に変更 */
+    #current-path { font-size: 14px; font-weight: 600; color: #1f2937; }
 
     textarea {
       flex: 1;
@@ -287,7 +381,7 @@
       resize: none;
       outline: none;
       overflow-y: auto;
-      color: #0f172a; /* エディタ内テキストを完全な黒（濃い紺黒）に変更 */
+      color: #0f172a;
       background: #ffffff;
       transition: border-color 0.15s ease;
     }
@@ -399,7 +493,7 @@
     }
 
     .search-hit-snippet {
-      color: #374151; /* 検索スニペットも黒字に変更 */
+      color: #374151;
       word-break: break-all;
     }
 
@@ -410,7 +504,6 @@
       border-radius: 2px;
     }
 
-    /* 注意ダイアログ用スタイル */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -476,13 +569,11 @@
 		        <stop offset="0%" stop-color="#10b981"/>
 		        <stop offset="100%" stop-color="#34d399"/>
 		      </linearGradient>
-		      <!-- 文字背景用の影フィルタ -->
 		      <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
 		        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.6"/>
 		      </filter>
 		    </defs>
 		    
-		    <!-- アイコン: 幾何学ツリー -->
 		    <g transform="translate(6, 4)">
 		      <circle cx="20" cy="20" r="19" fill="#ecfdf5"/>
 		      <path d="M20 31 V12 M20 18 L27 12 M20 23 L13 17 M20 24 L26 19" stroke="url(#mGrad1)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -490,7 +581,6 @@
 		      <circle cx="28" cy="11" r="2" fill="#34d399"/>
 		    </g>
 
-		    <!-- テキスト: ロゴ -->
 		    <g filter="url(#dropShadow)" class="logo-text">
 		      <text x="56" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="700" letter-spacing="-0.5">
 		        <tspan fill="#f0fdf4" font-size="25">Tree</tspan>
@@ -511,7 +601,12 @@
       <input type="file" id="fileInput" accept=".txt,text/plain" multiple style="display: none;" onchange="handleFileSelect(event)">
       <input type="file" id="folderInput" webkitdirectory style="display: none;" onchange="handleFolderSelect(event)">
 
-      <button class="btn btn-sync" onclick="connectDirectory()">💾 ローカル同期先フォルダを選択</button>
+      <div class="sync-status-container">
+        <button id="sync-folder-btn" class="btn btn-sync" onclick="connectDirectory()">💾 ローカル同期先フォルダを選択</button>
+        <div id="dir-status-badge" class="dir-badge unconnected">
+          ⚠️ フォルダ未接続（手動保存のみ）
+        </div>
+      </div>
 
       <button class="btn btn-primary" onclick="toggleSearchPanel(true)">🔍 ファイル内・全メモ検索 (Ctrl+F)</button>
       
@@ -528,10 +623,8 @@
 
     <div id="tree-container" tabindex="0"></div>
 
-    <!-- 1. サイドバー下部 広告スペース -->
     <div class="ad-sidebar">
       <span class="ad-label">スポンサーリンク</span>
-      <!-- AdSense タグ例 -->
       <ins class="adsbygoogle"
            style="display:inline-block;width:250px;height:100px"
            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -548,21 +641,19 @@
         <span id="current-path">項目を選択してください</span>
         <div style="display: flex; gap: 8px; align-items: center;">
           <span id="status"></span>
-          <!-- ヘッダー右側やアクションバー内に追加するボタン -->
-		  <a href="help.html" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration: none;">
+          <a href="help.html" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration: none;">
 			  ❓ 使い方
 		  </a>
+          <button id="auto-backup-btn" class="btn" onclick="toggleAutoBackup()">🔄 自動保存: ON</button>
           <button class="btn btn-warning" onclick="toggleWarningModal(true)">⚠️ 保存についての注意</button>
           <button class="btn btn-primary" onclick="saveAllToDisk()">💾 ローカルフォルダへ一括保存 (Ctrl+S)</button>
         </div>
       </div>
       <textarea id="memo" placeholder="メモを選択するか、新規作成してください" disabled oninput="onMemoInput()"></textarea>
 
-      <!-- 2. エディタ下部 広告スペース -->
       <div class="ad-editor-bottom">
         <div>
           <span class="ad-label">スポンサーリンク</span>
-          <!-- AdSense タグ例 -->
           <ins class="adsbygoogle"
                style="display:block"
                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -586,7 +677,6 @@
     </div>
   </div>
 
-  <!-- 注意説明ダイアログ (Modal) -->
   <div id="warning-modal" class="modal-overlay hidden">
     <div class="modal-card">
       <div class="modal-header">
@@ -631,9 +721,16 @@
     let draggedNodeIds = [];
     let draggedTabId = null;
 
+    let autoSaveTimer = null;
+    const AUTO_SAVE_DELAY = 2000;
+    let isAutoBackupEnabled = JSON.parse(localStorage.getItem('memo_auto_backup_enabled'));
+    if (isAutoBackupEnabled === null) isAutoBackupEnabled = true;
+
     window.onload = () => {
       renderTree();
       renderTabs();
+      updateDirStatusUI();
+
       if (recentTabs.length > 0) {
         openFile(recentTabs[0].id);
       } else {
@@ -647,6 +744,25 @@
           tabBar.scrollLeft += e.deltaY;
         }
       }, { passive: false });
+
+      const textarea = document.getElementById('memo');
+
+      // スクロール位置およびカーソル位置のリアルタイム保持
+      const saveState = () => {
+        if (activeTabId) {
+          const tab = recentTabs.find(t => t.id === activeTabId);
+          if (tab) {
+            tab.scrollTop = textarea.scrollTop;
+            tab.selectionStart = textarea.selectionStart;
+            tab.selectionEnd = textarea.selectionEnd;
+          }
+        }
+      };
+
+      textarea.addEventListener('scroll', saveState);
+      textarea.addEventListener('keyup', saveState);
+      textarea.addEventListener('mouseup', saveState);
+      textarea.addEventListener('click', saveState);
 
       setupTreeKeyboardShortcuts();
 
@@ -663,6 +779,77 @@
         }
       });
     };
+
+    function updateDirStatusUI() {
+      const badge = document.getElementById('dir-status-badge');
+      const btn = document.getElementById('sync-folder-btn');
+      if (!badge || !btn) return;
+
+      if (dirHandle) {
+        badge.className = 'dir-badge connected';
+        badge.innerHTML = `✅ 接続中: <strong>${escapeHtml(dirHandle.name)}</strong>`;
+        btn.textContent = '🔄 同期先フォルダを変更';
+        btn.classList.add('connected');
+      } else {
+        badge.className = 'dir-badge unconnected';
+        badge.innerHTML = `⚠️ フォルダ未接続（手動保存のみ）`;
+        btn.textContent = '💾 ローカル同期先フォルダを選択';
+        btn.classList.remove('connected');
+      }
+
+      updateAutoBackupBtnUI();
+    }
+
+    async function connectDirectory() {
+      if (!('showDirectoryPicker' in window)) {
+        alert('お使いのブラウザはローカルフォルダ同期(FileSystem Access API)に対応していません。ChromeまたはEdgeをご利用ください。');
+        return;
+      }
+      try {
+        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+        updateDirStatusUI();
+        showStatus(`同期先: 「${dirHandle.name}」 フォルダを接続しました`);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('フォルダ接続エラー:', err);
+          alert('フォルダの選択に失敗しました。');
+        }
+      }
+    }
+
+    function toggleAutoBackup() {
+      if (!dirHandle) return;
+      isAutoBackupEnabled = !isAutoBackupEnabled;
+      localStorage.setItem('memo_auto_backup_enabled', JSON.stringify(isAutoBackupEnabled));
+      updateAutoBackupBtnUI();
+      showStatus(isAutoBackupEnabled ? '自動保存を有効にしました' : '自動保存を無効にしました');
+    }
+
+    function updateAutoBackupBtnUI() {
+      const btn = document.getElementById('auto-backup-btn');
+      if (!btn) return;
+
+      if (!dirHandle) {
+        btn.disabled = true;
+        btn.textContent = '⏸️ 自動保存: 無効（フォルダ未選択）';
+        btn.style.background = '#e5e7eb';
+        btn.style.borderColor = '#d1d5db';
+        btn.style.color = '#9ca3af';
+      } else {
+        btn.disabled = false;
+        if (isAutoBackupEnabled) {
+          btn.textContent = '🔄 自動保存: ON';
+          btn.style.background = '#d1fae5';
+          btn.style.borderColor = '#10b981';
+          btn.style.color = '#065f46';
+        } else {
+          btn.textContent = '⏸️ 自動保存: OFF';
+          btn.style.background = '#f3f4f6';
+          btn.style.borderColor = '#d1d5db';
+          btn.style.color = '#6b7280';
+        }
+      }
+    }
 
     function toggleWarningModal(show) {
       const modal = document.getElementById('warning-modal');
@@ -706,6 +893,22 @@
 
     function saveTabsToStorage() {
       localStorage.setItem('memo_recent_tabs', JSON.stringify(recentTabs));
+    }
+
+    function triggerAutoBackup() {
+      saveTreeToStorage();
+      saveTabsToStorage();
+
+      if (dirHandle) {
+        writeNodeToDirectory(fileTree, dirHandle).then(() => {
+          showStatus('自動バックアップ完了');
+        }).catch(err => {
+          console.error('自動バックアップ同期失敗:', err);
+          showStatus('自動保存 (LocalStorage)');
+        });
+      } else {
+        showStatus('自動保存完了');
+      }
     }
 
     document.getElementById('tree-container').onclick = (e) => {
@@ -1500,7 +1703,6 @@
 
       focusedNodeId = id;
       
-      document.getElementById('tree-container').focus();
       renderTree();
     }
 
@@ -1508,16 +1710,32 @@
       const node = findNodeById(fileTree, id);
       if (!node || node.type !== 'file') return;
 
+      const textarea = document.getElementById('memo');
+
+      // 切り替え前に現在のタブの「スクロール位置」と「カーソル位置」を保存
+      if (activeTabId) {
+        const currentTab = recentTabs.find(t => t.id === activeTabId);
+        if (currentTab) {
+          currentTab.scrollTop = textarea.scrollTop;
+          currentTab.selectionStart = textarea.selectionStart;
+          currentTab.selectionEnd = textarea.selectionEnd;
+        }
+      }
+
       selectNode(id, false, false);
       activeTabId = id;
 
       addRecentTab(node);
       
-      const textarea = document.getElementById('memo');
       textarea.disabled = false;
       textarea.placeholder = "メモの内容を入力...";
       textarea.value = node.content || '';
       document.getElementById('current-path').textContent = getNodePath(fileTree, node.id);
+
+      const targetTab = recentTabs.find(t => t.id === id);
+      const savedScrollTop = targetTab ? (targetTab.scrollTop || 0) : 0;
+      const savedStart = targetTab && targetTab.selectionStart !== undefined ? targetTab.selectionStart : (node.content || '').length;
+      const savedEnd = targetTab && targetTab.selectionEnd !== undefined ? targetTab.selectionEnd : (node.content || '').length;
 
       if (targetMatchIndex >= 0 && matchLength > 0) {
         setTimeout(() => {
@@ -1529,6 +1747,13 @@
           const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 24;
           textarea.scrollTop = Math.max(0, (lineNum - 3) * lineHeight);
         }, 50);
+      } else {
+        // 通常切り替え時は保存されたスクロール位置とカーソルを復元して即フォーカス
+        setTimeout(() => {
+          textarea.focus();
+          textarea.setSelectionRange(savedStart, savedEnd);
+          textarea.scrollTop = savedScrollTop;
+        }, 0);
       }
 
       renderTabs();
@@ -1541,7 +1766,24 @@
       const node = findNodeById(fileTree, activeTabId);
       if (node && node.type === 'file') {
         node.content = textarea.value;
+      }
+
+      // 入力時にもカーソル・スクロール位置を保存
+      const tab = recentTabs.find(t => t.id === activeTabId);
+      if (tab) {
+        tab.scrollTop = textarea.scrollTop;
+        tab.selectionStart = textarea.selectionStart;
+        tab.selectionEnd = textarea.selectionEnd;
+      }
+
+      clearTimeout(autoSaveTimer);
+      if (isAutoBackupEnabled && dirHandle) {
+        autoSaveTimer = setTimeout(() => {
+          triggerAutoBackup();
+        }, AUTO_SAVE_DELAY);
+      } else {
         saveTreeToStorage();
+        saveTabsToStorage();
       }
 
       const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 24;
@@ -1561,7 +1803,13 @@
       if (node.type !== 'file') return;
       const existingIndex = recentTabs.findIndex(tab => tab.id === node.id);
       if (existingIndex === -1) {
-        recentTabs.unshift({ id: node.id, name: node.name });
+        recentTabs.unshift({ 
+          id: node.id, 
+          name: node.name, 
+          scrollTop: 0,
+          selectionStart: (node.content || '').length,
+          selectionEnd: (node.content || '').length
+        });
         if (recentTabs.length > 15) recentTabs.pop();
       }
       saveTabsToStorage();
@@ -1743,22 +1991,6 @@
 
     function escapeHtml(str) {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    async function connectDirectory() {
-      if (!('showDirectoryPicker' in window)) {
-        alert('お使いのブラウザはローカルフォルダ同期(FileSystem Access API)に対応していません。ChromeまたはEdgeをご利用ください。');
-        return;
-      }
-      try {
-        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-        showStatus(`同期先: 「${dirHandle.name}」 フォルダを接続しました`);
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.error('フォルダ接続エラー:', err);
-          alert('フォルダの選択に失敗しました。');
-        }
-      }
     }
 
     async function saveAllToDisk() {
