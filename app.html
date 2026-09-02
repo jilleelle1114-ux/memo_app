@@ -43,28 +43,10 @@
       document.getElementById('manifest-placeholder').setAttribute('href', manifestURL);
     });
 
-    // 2. Dynamic Service Worker Registration (Data URL方式)
+    // 2. Service Worker Registration (外部ファイル参照)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        const swCode = `
-          const CACHE_NAME = 'treemo-cache-v1';
-          self.addEventListener('install', (e) => {
-            self.skipWaiting();
-          });
-          self.addEventListener('activate', (e) => {
-            e.waitUntil(clients.claim());
-          });
-          self.addEventListener('fetch', (e) => {
-            e.respondWith(
-              fetch(e.request).catch(() => caches.match(e.request))
-            );
-          });
-        `;
-        
-        // Data URL形式に変換して登録
-        const swDataURL = 'data:text/javascript;base64,' + btoa(unescape(encodeURIComponent(swCode)));
-
-        navigator.serviceWorker.register(swDataURL)
+        navigator.serviceWorker.register('./sw.js')
           .then(reg => console.log('PWA Service Worker Registered:', reg))
           .catch(err => console.log('SW Registration failed:', err));
       });
