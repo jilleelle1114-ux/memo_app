@@ -17,7 +17,7 @@
   <!-- PWA設定動的生成 & Service Worker登録処理 -->
   <script>
     // 1. Dynamic Web Manifest Generation
-    const svgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23059669'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='20' fill='%23ecfdf5'/%3E%3Cg transform='scale(1.15) translate(-2.6, -2.6)'%3E%3Cpath d='M20 32 V11 M20 17 L28 10 M20 23 L12 16 M20 24 L27 18' stroke='url(%23g)' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='20' cy='7.5' r='3' fill='%2310b981'/%3E%3Ccircle cx='29.5' cy='9' r='2.5' fill='%2334d399'/%3E%3C/g%3E%3C/svg%3E`;
+    // const svgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23059669'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='20' fill='%23ecfdf5'/%3E%3Cg transform='scale(1.15) translate(-2.6, -2.6)'%3E%3Cpath d='M20 32 V11 M20 17 L28 10 M20 23 L12 16 M20 24 L27 18' stroke='url(%23g)' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='20' cy='7.5' r='3' fill='%2310b981'/%3E%3Ccircle cx='29.5' cy='9' r='2.5' fill='%2334d399'/%3E%3C/g%3E%3C/svg%3E`;
 
     const manifestData = {
       "name": "TreeMo (ツリーモ)",
@@ -29,7 +29,7 @@
       "theme_color": "#064e3b",
       "icons": [
         {
-          "src": svgIcon,
+          "src": "https://jilleelle1114-ux.github.io/memo_app/icon.svg",
           "sizes": "any",
           "type": "image/svg+xml",
           "purpose": "any maskable"
@@ -59,9 +59,11 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       display: flex;
       height: 100vh;
+      width: 100vw;
       overflow: hidden;
       background: #f0fdf4;
       color: #1f2937;
+      position: relative;
     }
 
     #sidebar {
@@ -274,6 +276,13 @@
       flex-direction: column;
       background: #ffffff;
       min-width: 0;
+      margin-right: 320px;
+      transition: margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 検索パネル非表示時はエディタ枠を全幅に拡張 */
+    #search-panel.hidden ~ #main-content {
+      margin-right: 0;
     }
 
     #tab-bar {
@@ -377,17 +386,26 @@
 
     #status { font-size: 13px; color: #059669; font-weight: bold; }
 
+    /* 検索パネル：fixed指定でアニメーション制御 */
     #search-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
       width: 320px;
+      height: 100vh;
       background: #ffffff;
       border-left: 1px solid #a7f3d0;
+      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
-      transition: margin-right 0.2s ease-in-out;
+      z-index: 500;
+      transform: translateX(0);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    #search-panel.hidden { display: none; }
+    #search-panel.hidden {
+      transform: translateX(100%);
+    }
 
     .search-panel-header {
       padding: 14px;
@@ -396,6 +414,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .search-panel-header h3 { font-size: 14px; color: #1f2937; font-weight: 600; }
@@ -417,6 +436,7 @@
       flex-direction: column;
       gap: 12px;
       flex: 1;
+      min-height: 0;
       overflow: hidden;
     }
 
@@ -428,12 +448,14 @@
       border: 1px solid #a7f3d0;
       border-radius: 6px;
       outline: none;
+      flex-shrink: 0;
       transition: border-color 0.15s ease;
     }
     .search-box:focus { border-color: #10b981; }
 
     #search-results-list {
       flex: 1;
+      min-height: 0;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -444,6 +466,7 @@
       border: 1px solid #a7f3d0;
       border-radius: 6px;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .search-file-header {
@@ -616,6 +639,17 @@
     </div>
   </div>
 
+  <div id="search-panel" class="hidden">
+    <div class="search-panel-header">
+      <h3>🔍 全メモから検索</h3>
+      <button class="btn-close-panel" onclick="toggleSearchPanel(false)">×</button>
+    </div>
+    <div class="search-panel-body">
+      <input type="text" id="panelSearchInput" class="search-box" placeholder="検索キーワードを入力..." oninput="executePanelSearch()">
+      <div id="search-results-list"></div>
+    </div>
+  </div>
+
   <div id="main-content">
     <div id="tab-bar"></div>
 
@@ -646,17 +680,6 @@
           <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div id="search-panel" class="hidden">
-    <div class="search-panel-header">
-      <h3>🔍 全メモから検索</h3>
-      <button class="btn-close-panel" onclick="toggleSearchPanel(false)">×</button>
-    </div>
-    <div class="search-panel-body">
-      <input type="text" id="panelSearchInput" class="search-box" placeholder="検索キーワードを入力..." oninput="executePanelSearch()">
-      <div id="search-results-list"></div>
     </div>
   </div>
 

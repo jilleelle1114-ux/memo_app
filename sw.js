@@ -1,6 +1,13 @@
 // sw.js
 const CACHE_NAME = 'treemo-cache-v1';
 
+const CACHE_ASSETS = [
+  './',
+  './app.html',
+  './icon.svg',
+  './sw.js'
+];
+
 self.addEventListener('install', (e) => {
   self.skipWaiting();
 });
